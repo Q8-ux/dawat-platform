@@ -1,0 +1,46 @@
+name: Canva Import - GitHub Database
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/canva/import-queue.json'
+      - 'assets/canva-approved/**'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: dawat-canva-import
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Import Canva records into GitHub JSON database
+        run: node scripts/import-canva.mjs --write
+      - name: Validate imports and website
+        run: |
+          node scripts/import-canva.mjs --check
+          node --test tests/*.test.cjs
+      - name: Commit database only when content changes
+        id: persist
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/canva/templates.json assets/canva-public.js
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Database already up to date."
+          else
+            git commit -m "Update DAWAT Canva database"
+            git push origin HEAD:main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publish updates to GitHub Pages
+        if: steps.persist.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
