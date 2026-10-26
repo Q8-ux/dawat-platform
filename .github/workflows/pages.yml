@@ -4,6 +4,10 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'assets/**'
+      - 'tests/**'
+      - 'README.md'
+      - 'PATHS.md'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 permissions:
@@ -34,6 +38,10 @@ jobs:
           assert not any(x in t.lower() for x in ('sabeq','lovable.app','chatgpt.site'))
           print('DAWAT standalone verification: PASS')
           PY
+      - name: Run catalog and JavaScript checks
+        run: |
+          node --check assets/catalog.js
+          node --test tests/*.test.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
