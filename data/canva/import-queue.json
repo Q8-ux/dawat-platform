@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "note": "Canva public template references only. No access to private Canva projects.",
+  "items": [
+    {
+      "id": "canva-01",
+      "category": "زفاف",
+      "name": "زفاف زهري عاجي",
+      "canvaTitle": "White and Beige Elegant Floral Wedding Invitation",
+      "url": "https://www.canva.com/wedding-invitations/templates/elegant/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-02",
+      "category": "زفاف",
+      "name": "زفاف تقليدي ذهبي",
+      "canvaTitle": "Gold Floral Traditional Wedding Invitation",
+      "url": "https://www.canva.com/wedding-invitations/templates/gold/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-03",
+      "category": "زفاف",
+      "name": "دعوة زفاف أزرق ووردي",
+      "canvaTitle": "Blue White and Pink Elegant Invitation",
+      "url": "https://www.canva.com/wedding-invitations/templates/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-04",
+      "category": "زفاف",
+      "name": "زفاف أسود وذهبي",
+      "canvaTitle": "Black and Gold Elegant Simple Wedding Invitation",
+      "url": "https://www.canva.com/wedding-invitations/templates/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-05",
+      "category": "زفاف",
+      "name": "زفاف بألوان مائية خضراء",
+      "canvaTitle": "Green Cream Aesthetic Minimalist Watercolor Wedding Invitation",
+      "url": "https://www.canva.com/wedding-invitations/templates/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-06",
+      "category": "خطوبة",
+      "name": "خطوبة رومانسية للستوري",
+      "canvaTitle": "White Elegant Romantic Engagement Instagram Story",
+      "url": "https://www.canva.com/templates/s/engagement/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-07",
+      "category": "خطوبة",
+      "name": "خطوبة بأوراق وزهور",
+      "canvaTitle": "Green Floral Watercolor Elegant Greenery Engagement Wedding Save The Date Invitation",
+      "url": "https://www.canva.com/templates/s/engagement/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-08",
+      "category": "خطوبة",
+      "name": "خطوبة عنابية مصورة",
+      "canvaTitle": "Burgundy Illustrated Engagement Ceremony Invitation",
+      "url": "https://www.canva.com/templates/s/engagement/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-09",
+      "category": "تخرج",
+      "name": "حفل تخرج أسود وذهبي",
+      "canvaTitle": "Black & Gold Vintage Classic Graduation Party Invitation",
+      "url": "https://www.canva.com/invitations/templates/graduation/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-10",
+      "category": "تخرج",
+      "name": "تخرج نباتي ذهبي",
+      "canvaTitle": "Gold Olive Green and Cream Vintage Botanical Graduation Party Invitation",
+      "url": "https://www.canva.com/invitations/templates/graduation/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-11",
+      "category": "تخرج",
+      "name": "تخرج أخضر وذهبي",
+      "canvaTitle": "Green Gold Contemporary & Classy Traditional Graduation Invitation",
+      "url": "https://www.canva.com/invitations/templates/graduation/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-12",
+      "category": "مولود",
+      "name": "استقبال مولود بأرنب مائي",
+      "canvaTitle": "Blush Watercolor Whimsical Sweet Bunny Theme Baby shower Invitation",
+      "url": "https://www.canva.com/baby-shower-invitations/templates/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-13",
+      "category": "مولود",
+      "name": "مولود أزرق بخط فني",
+      "canvaTitle": "Blue and Brown Watercolor Flowy Script Baby Boy Shower Invitation",
+      "url": "https://www.canva.com/baby-shower-invitations/templates/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-14",
+      "category": "مولود",
+      "name": "استقبال مولود أخضر وذهبي",
+      "canvaTitle": "Green Pink and Gold Elegant Baby Shower Invitation",
+      "url": "https://www.canva.com/baby-shower-invitations/templates/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-15",
+      "category": "عيد ميلاد",
+      "name": "ستوري عيد ميلاد بنفسجي",
+      "canvaTitle": "Purple Pink Floral Happy Birthday Instagram Story",
+      "url": "https://www.canva.com/instagram-stories/templates/birthday/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-16",
+      "category": "عيد ميلاد",
+      "name": "ستوري عيد ميلاد بالصور",
+      "canvaTitle": "White Black and Silver Minimalist Birthday Photo Strip Instagram Story",
+      "url": "https://www.canva.com/instagram-stories/templates/birthday/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-17",
+      "category": "عيد ميلاد",
+      "name": "ستوري كلاسيكي سكراب بوك",
+      "canvaTitle": "Retro Scrapbook Photo Collage Birthday Instagram Story",
+      "url": "https://www.canva.com/instagram-stories/templates/birthday/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-18",
+      "category": "تهنئة",
+      "name": "تهنئة بنفسجية مزهرة",
+      "canvaTitle": "Purple Floral Congratulations Card",
+      "url": "https://www.canva.com/cards/templates/congratulations/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-19",
+      "category": "تهنئة",
+      "name": "تهنئة وردية راقية",
+      "canvaTitle": "Pink and Beige Floral Congratulations Card",
+      "url": "https://www.canva.com/cards/templates/congratulations/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    },
+    {
+      "id": "canva-20",
+      "category": "تهنئة",
+      "name": "تهنئة خضراء بسيطة",
+      "canvaTitle": "Green Simple Congratulations Card",
+      "url": "https://www.canva.com/cards/templates/congratulations/",
+      "sourceType": "public-reference",
+      "linkType": "category",
+      "licenseStatus": "link-only"
+    }
+  ]
+}
