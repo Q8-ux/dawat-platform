@@ -185,3 +185,24 @@ footer {background:rgba(5,12,28,.96);border-top:1px solid rgba(102,211,242,.19);
   .guest-view .invite-card.catalog-card {transform:none!important;box-shadow:none!important}
   .rsvp-box {display:none!important}
 }
+
+
+/* Five Neon 3D invitation compositions inside the 100-template catalog. */
+.catalog-card[data-palette="night"] {
+  background:radial-gradient(ellipse at 20% 13%,rgba(67,243,233,.16),transparent 43%),
+    radial-gradient(ellipse at 89% 85%,rgba(171,97,255,.22),transparent 55%),
+    linear-gradient(145deg,#121e48 0%,#0a102b 58%,#181039 100%)!important;
+  color:#adfff6!important;
+  border-color:#65ecf4!important;
+  box-shadow:inset 0 0 36px rgba(73,247,234,.11),0 0 19px rgba(76,231,242,.24),0 0 32px rgba(167,102,255,.12);
+}
+.catalog-card[data-palette="night"] h2,.catalog-card[data-palette="night"] b {color:#f0ffff;text-shadow:0 0 17px rgba(93,250,236,.46)}
+.catalog-card[data-palette="night"] .over,.catalog-card[data-palette="night"] small {color:#c9b6ff;text-shadow:0 0 12px rgba(167,115,250,.36)}
+.catalog-card[data-palette="night"]:before {border-color:#9367dc!important;box-shadow:inset 0 0 24px rgba(177,118,255,.09)}
+.preview-area .catalog-card[data-palette="night"] {
+  box-shadow:18px 25px 0 rgba(5,9,27,.75),23px 37px 48px #0008,
+    0 0 36px rgba(65,241,236,.22),0 0 52px rgba(155,94,250,.16);
+}
+@media(max-width:750px){
+  .preview-area .catalog-card[data-palette="night"] {box-shadow:0 18px 32px #0008,0 0 22px #4cf2ea2a}
+}
