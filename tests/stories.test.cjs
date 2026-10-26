@@ -19,6 +19,7 @@ test('20 distinct story assets declared and exist',()=>{
   assert.equal(item.width,1080);
   assert.equal(item.height,1920);
   assert.equal(item.format,'image/svg+xml');
+  assert.equal(item.photo,'assets/story-photos/'+item.id+'.png');
   assert.ok(fs.existsSync(item.src),item.src);
   const raw=fs.readFileSync(item.src,'utf8');
   assert.match(raw,/<svg[\s\S]*width="1080" height="1920"/);
