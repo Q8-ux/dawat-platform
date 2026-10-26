@@ -36,6 +36,27 @@ header{background:#0c1d29;color:#fff;position:sticky;top:0;z-index:20;border-bot
 @media(max-width:500px){.catalog-filters input,.catalog-filters select{width:100%}}
 @media(max-width:750px){header .inner{flex-wrap:wrap;justify-content:space-between}header nav{order:3;width:100%;justify-content:center;flex-wrap:wrap;gap:15px}header nav a:nth-child(1){display:inline!important}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Guest RSVP workflow: direct messaging, never a false database success state */
+.rsvp-settings{margin-top:18px;padding:15px;border:1px solid #dac9aa;border-radius:12px;background:#fbf8f1}
+.rsvp-settings h4{font:700 22px Amiri;margin:0 0 10px}
+.rsvp-switch{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700}
+.rsvp-switch input{width:19px;height:19px;accent-color:#aa854e}
+.rsvp-options{margin-top:14px;display:grid;gap:10px}
+.rsvp-box{background:#fff;border:1px solid #e1d3bd;border-radius:17px;padding:21px;margin:22px 0}
+.rsvp-box h3{margin:2px 0 7px;font:700 29px Amiri}
+.rsvp-box p{font-size:12px;line-height:1.9;color:#6c747b}
+.rsvp-choices{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}
+.rsvp-choice{background:#f7f5ef;border:2px solid #ded6c8;border-radius:12px;padding:12px 9px;font-weight:800;font-size:13px;color:#313a40}
+.rsvp-choice[aria-pressed="true"]{background:#e9f4ec;border-color:#568869;color:#285d3d}
+.rsvp-choice.decline[aria-pressed="true"]{background:#fff0ed;border-color:#cb8679;color:#99453a}
+.rsvp-form{display:grid;gap:10px}
+.rsvp-form label{font-size:12px;font-weight:700}
+.rsvp-form input,.rsvp-form select,.rsvp-form textarea{width:100%;border:1px solid #dad4ca;padding:11px;border-radius:9px;color:#293842;background:#fff;font:13px Cairo}
+.rsvp-form textarea{min-height:64px}
+.rsvp-privacy{padding:12px;background:#fff7e8;border-radius:10px;border:1px solid #e7d6b6;font-size:11px;line-height:1.9;color:#715931}
+.rsvp-actions .btn{width:100%}
+@media(max-width:450px){.rsvp-box{padding:15px}.rsvp-choice{font-size:11px}}
 </style>
 </head>
 <body>
@@ -56,7 +77,7 @@ function choose(id){var t=preset(id);state.theme=t.id;state.kind=t.kind;state.ti
 if(location.hash==='#/studio')studio();else location.hash='#/studio'}
 
 var kinds=['زفاف','عقد قران','خطوبة','تخرج','مولود','استقبال','عيد ميلاد','مناسبة خاصة'];
-var key='dawat-studio-v1';var editing=null;var state={kind:'زفاف',title:'ليلة العمر',names:'عبدالله و نورة',host:'تتشرف العائلة بدعوتكم',message:'بكل الحب والفرح نتشرف بحضوركم ومشاركتكم أجمل لحظاتنا',date:'',time:'',venue:'قاعة الاحتفالات',maps:'',whatsapp:'',theme:'royal',rsvp:true};
+var key='dawat-studio-v1';var editing=null;var state={kind:'زفاف',title:'ليلة العمر',names:'عبدالله و نورة',host:'تتشرف العائلة بدعوتكم',message:'بكل الحب والفرح نتشرف بحضوركم ومشاركتكم أجمل لحظاتنا',date:'',time:'',venue:'قاعة الاحتفالات',maps:'',whatsapp:'',theme:'royal',rsvp:true,maxCompanions:2,rsvpDeadline:''};
 var app=document.querySelector('#app');var toast=document.querySelector('#toast');
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function attr(s){return esc(s)}
@@ -90,8 +111,13 @@ document.getElementById('catalog-more').onclick=function(){limit+=24;render()};r
 }
 
 function input(name,label,type,options){var val=state[name]||'';if(type==='select')return '<div class="field"><label for="'+name+'">'+label+'</label><select id="'+name+'" data-field="'+name+'">'+options.map(function(v){return '<option '+(val===v?'selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select></div>';if(type==='textarea')return '<div class="field"><label for="'+name+'">'+label+'</label><textarea id="'+name+'" data-field="'+name+'">'+esc(val)+'</textarea></div>';return '<div class="field"><label for="'+name+'">'+label+'</label><input id="'+name+'" type="'+type+'" data-field="'+name+'" value="'+attr(val)+'"></div>'}
-function studio(){app.innerHTML='<div class="container"><div class="eyebrow">STUDIO · DAWAT</div><h1 style="font:700 37px Amiri;margin:5px 0">استوديو الدعوات</h1><p class="subtitle">عدّل تفاصيل مناسبتك، والمعاينة تتغير فوراً. تحفظ المسودات داخل المتصفح الحالي فقط.</p><div class="workspace"><section class="panel"><h3>تفاصيل المناسبة</h3><div class="fields">'+input('kind','نوع المناسبة','select',kinds)+input('title','اسم الدعوة','text')+input('names','اسم العروسين / صاحب المناسبة','text')+input('host','نص الجهة الداعية','text')+input('message','كلمات الدعوة','textarea')+'<div class="two">'+input('date','تاريخ المناسبة','date')+input('time','الوقت (اختياري)','time')+'</div>'+input('venue','المكان','text')+input('maps','رابط موقع Google / Apple Maps','url')+input('whatsapp','واتساب المنظّم (اختياري)','tel')+'</div><div class="actions"><button class="btn btn-dark" id="save" type="button">حفظ الدعوة</button><button class="btn btn-white" id="new" type="button">مسح الحقول</button></div></section><section class="preview-area"><div class="preview-top"><b>معاينة دعوتك</b><span class="note">التصميم يتغير مباشرة</span></div><div id="live-card">'+invite(state)+'</div><div class="studio-tools"><button class="btn btn-dark btn-sm" id="png">تنزيل PNG</button><button class="btn btn-white btn-sm" id="print">حفظ PDF</button><button class="btn btn-white btn-sm" id="share">رابط مشاركة</button><button class="btn btn-white btn-sm" id="calendar">إضافة للتقويم</button></div><span class="tiny">الصور الناتجة للاستخدام الشخصي. روابط المشاركة عامة لمن يحصل عليها.</span></section><section class="panel third"><h3>مظهر البطاقة</h3><div class="templates" id="studio-templates" style="grid-template-columns:repeat(2,1fr);gap:9px"></div><div class="actions"><a class="btn btn-white btn-sm" href="#/templates">عرض جميع الـ100 نموذج</a></div><h4 style="margin:18px 0 6px">مسار صياغة النصوص</h4><p class="tiny">صياغات محلية جاهزة؛ لا تتصل بخدمة ذكاء اصطناعي خارجية.</p><button type="button" class="btn btn-white" id="copy-suggest">اقترح نص الدعوة</button><div class="notice" style="margin-top:15px">النسخة الحالية تعمل محلياً دون حسابات أو قاعدة ضيوف مركزية. لا تضع بيانات سرية في روابط المشاركة.</div></section></div></div>';
+function studio(){app.innerHTML='<div class="container"><div class="eyebrow">STUDIO · DAWAT</div><h1 style="font:700 37px Amiri;margin:5px 0">استوديو الدعوات</h1><p class="subtitle">عدّل تفاصيل مناسبتك، والمعاينة تتغير فوراً. تحفظ المسودات داخل المتصفح الحالي فقط.</p><div class="workspace"><section class="panel"><h3>تفاصيل المناسبة</h3><div class="fields">'+input('kind','نوع المناسبة','select',kinds)+input('title','اسم الدعوة','text')+input('names','اسم العروسين / صاحب المناسبة','text')+input('host','نص الجهة الداعية','text')+input('message','كلمات الدعوة','textarea')+'<div class="two">'+input('date','تاريخ المناسبة','date')+input('time','الوقت (اختياري)','time')+'</div>'+input('venue','المكان','text')+input('maps','رابط موقع Google / Apple Maps','url')+input('whatsapp','واتساب المنظّم (لاستقبال ردود الحضور)','tel')+'</div><div class="rsvp-settings"><h4>نظام تأكيد الحضور والاعتذار</h4><label class="rsvp-switch"><input id="rsvp-enabled" type="checkbox" '+(state.rsvp!==false?'checked':'')+'>تفعيل رد الضيوف عبر واتساب</label><div class="rsvp-options" id="rsvp-options"><div class="field"><label for="rsvp-deadline">آخر يوم لتأكيد الحضور (اختياري)</label><input id="rsvp-deadline" type="date" value="'+attr(state.rsvpDeadline||'')+'"></div><div class="field"><label for="rsvp-max">أقصى عدد مرافقين لكل ضيف</label><select id="rsvp-max">'+Array.from({length:11},function(_,i){return '<option value="'+i+'" '+(Number(state.maxCompanions||0)===i?'selected':'')+'>'+i+'</option>'}).join('')+'</select></div><p class="tiny">يختار الضيف سأحضر أو أعتذر، ثم يرسل رده إلى رقم المنظّم عبر واتساب. لا توجد قاعدة بيانات حضور مركزية في هذه النسخة.</p></div></div><div class="actions"><button class="btn btn-dark" id="save" type="button">حفظ الدعوة</button><button class="btn btn-white" id="new" type="button">مسح الحقول</button></div></section><section class="preview-area"><div class="preview-top"><b>معاينة دعوتك</b><span class="note">التصميم يتغير مباشرة</span></div><div id="live-card">'+invite(state)+'</div><div class="studio-tools"><button class="btn btn-dark btn-sm" id="png">تنزيل PNG</button><button class="btn btn-white btn-sm" id="print">حفظ PDF</button><button class="btn btn-white btn-sm" id="share">رابط مشاركة</button><button class="btn btn-white btn-sm" id="calendar">إضافة للتقويم</button></div><span class="tiny">الصور الناتجة للاستخدام الشخصي. روابط المشاركة عامة لمن يحصل عليها.</span></section><section class="panel third"><h3>مظهر البطاقة</h3><div class="templates" id="studio-templates" style="grid-template-columns:repeat(2,1fr);gap:9px"></div><div class="actions"><a class="btn btn-white btn-sm" href="#/templates">عرض جميع الـ100 نموذج</a></div><h4 style="margin:18px 0 6px">مسار صياغة النصوص</h4><p class="tiny">صياغات محلية جاهزة؛ لا تتصل بخدمة ذكاء اصطناعي خارجية.</p><button type="button" class="btn btn-white" id="copy-suggest">اقترح نص الدعوة</button><div class="notice" style="margin-top:15px">النسخة الحالية تعمل محلياً دون حسابات أو قاعدة ضيوف مركزية. لا تضع بيانات سرية في روابط المشاركة.</div></section></div></div>';
 document.querySelectorAll('[data-field]').forEach(function(el){el.addEventListener('input',function(){state[el.dataset.field]=el.value;document.querySelector('#live-card').innerHTML=invite(state)})});
+document.querySelector('#rsvp-enabled').onchange=function(){state.rsvp=this.checked;document.querySelector('#rsvp-options').classList.toggle('hidden',!this.checked)};
+document.querySelector('#rsvp-options').classList.toggle('hidden',state.rsvp===false);
+document.querySelector('#rsvp-deadline').onchange=function(){state.rsvpDeadline=this.value};
+document.querySelector('#rsvp-max').onchange=function(){state.maxCompanions=Number(this.value)};
+
 var target=document.querySelector('#studio-templates');
 var shown=[preset(state.theme)].concat(catalog.filter(function(t){return t.id!==state.theme&&t.kind===state.kind}).slice(0,7));
 target.innerHTML=shown.map(function(t){return '<button type="button" class="template '+(state.theme===t.id?'selected':'')+'" data-theme="'+t.id+'"><div class="mini-card catalog-card" data-layout="'+t.layout+'" style="'+cardStyle(t)+';height:120px;aspect-ratio:auto"><b style="font-size:17px">'+esc(t.title)+'</b></div><label>'+esc(t.label)+'</label></button>'}).join('');
@@ -102,7 +128,7 @@ var index=samples.indexOf(state.message);state.message=samples[(index+1)%samples
 };
 
 document.querySelector('#save').onclick=save;
-document.querySelector('#new').onclick=function(){if(confirm('هل تريد إنشاء دعوة جديدة؟')){editing=null;state={kind:'زفاف',title:'ليلة العمر',names:'',host:'',message:'يسرنا دعوتكم لمشاركتنا فرحتنا',date:'',time:'',venue:'',maps:'',whatsapp:'',theme:'royal'};studio()}};
+document.querySelector('#new').onclick=function(){if(confirm('هل تريد إنشاء دعوة جديدة؟')){editing=null;state={kind:'زفاف',title:'ليلة العمر',names:'',host:'',message:'يسرنا دعوتكم لمشاركتنا فرحتنا',date:'',time:'',venue:'',maps:'',whatsapp:'',theme:'royal',rsvp:true,maxCompanions:2,rsvpDeadline:''};studio()}};
 document.querySelector('#png').onclick=function(){exportPNG(state)};
 document.querySelector('#print').onclick=function(){showGuest(state,true);setTimeout(function(){window.print()},300)};
 document.querySelector('#share').onclick=function(){share(state)};document.querySelector('#calendar').onclick=function(){makeICS(state)};
@@ -122,7 +148,7 @@ app.querySelector('#import-backup').addEventListener('change',function(ev){
   var data=JSON.parse(txt);
   if(data.app!=='DAWAT'||!Array.isArray(data.invitations)||data.invitations.length>250)throw Error('bad-format');
   var entries=data.invitations.filter(function(o){return o&&typeof o==='object'&&catalogById[o.theme]&&typeof o.names==='string'&&typeof o.message==='string'&&o.message.length<=3000}).map(function(o){
-   return {id:unique(),kind:String(o.kind||'مناسبة خاصة').slice(0,75),title:String(o.title||'').slice(0,200),names:String(o.names).slice(0,200),host:String(o.host||'').slice(0,250),message:String(o.message).slice(0,3000),date:String(o.date||'').slice(0,20),time:String(o.time||'').slice(0,10),venue:String(o.venue||'').slice(0,250),maps:safeURL(o.maps||''),whatsapp:String(o.whatsapp||'').slice(0,30),theme:o.theme,updated:new Date().toISOString()};
+   return {id:unique(),kind:String(o.kind||'مناسبة خاصة').slice(0,75),title:String(o.title||'').slice(0,200),names:String(o.names).slice(0,200),host:String(o.host||'').slice(0,250),message:String(o.message).slice(0,3000),date:String(o.date||'').slice(0,20),time:String(o.time||'').slice(0,10),venue:String(o.venue||'').slice(0,250),maps:safeURL(o.maps||''),whatsapp:String(o.whatsapp||'').slice(0,30),theme:o.theme,rsvp:o.rsvp!==false,maxCompanions:Math.min(10,Math.max(0,Number(o.maxCompanions)||0)),rsvpDeadline:String(o.rsvpDeadline||'').slice(0,10),updated:new Date().toISOString()};
   });
   if(!entries.length){notify('لا توجد دعوات صالحة للاستيراد');return}
   if(!confirm('استيراد '+entries.length+' دعوة وإضافتها إلى المحفوظات؟'))return;
@@ -139,12 +165,58 @@ app.querySelectorAll('[data-view]').forEach(function(b){b.onclick=function(){var
 app.querySelectorAll('[data-share]').forEach(function(b){b.onclick=function(){var o=read().find(function(x){return x.id===b.dataset.share});if(o)share(o)}});
 app.querySelectorAll('[data-remove]').forEach(function(b){b.onclick=function(){if(confirm('حذف الدعوة المحفوظة من هذا المتصفح؟')){write(read().filter(function(x){return x.id!==b.dataset.remove}));dashboard()}}});
 }
-function encode(o){var data={kind:o.kind,title:o.title,names:o.names,host:o.host,message:o.message,date:o.date,time:o.time,venue:o.venue,maps:safeURL(o.maps||''),whatsapp:whatsapp(o.whatsapp||'')?String(o.whatsapp):'',theme:o.theme};return btoa(Array.from(new TextEncoder().encode(JSON.stringify(data)),function(b){return String.fromCharCode(b)}).join('')).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function encode(o){var data={kind:o.kind,title:o.title,names:o.names,host:o.host,message:o.message,date:o.date,time:o.time,venue:o.venue,maps:safeURL(o.maps||''),whatsapp:whatsapp(o.whatsapp||'')?String(o.whatsapp):'',theme:o.theme,rsvp:o.rsvp!==false,maxCompanions:Math.min(10,Math.max(0,Number(o.maxCompanions)||0)),rsvpDeadline:o.rsvpDeadline||''};return btoa(Array.from(new TextEncoder().encode(JSON.stringify(data)),function(b){return String.fromCharCode(b)}).join('')).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
 function decode(s){try{if(s.length>10000)return null;var b=atob(s.replace(/-/g,'+').replace(/_/g,'/'));var a=new Uint8Array(Array.from(b,function(c){return c.charCodeAt(0)}));var v=JSON.parse(new TextDecoder().decode(a));if(!v||typeof v!=='object')return null;return v}catch(e){return null}}
 function link(o){return location.origin+location.pathname+'#/invite/'+encode(o)}
-function showGuest(o,fromPrint){var map=safeURL(o.maps||''),wa=whatsapp(o.whatsapp||'');app.innerHTML='<div class="container guest-view"><div class="eyebrow" style="text-align:center">DAWAT · INVITATION</div><div style="margin:20px 0">'+invite(o)+'</div><div class="guest-actions">'+(map?'<a class="btn btn-dark" href="'+attr(map)+'" target="_blank" rel="noopener">📍 الموقع على الخريطة</a>':'')+(wa?'<a class="btn btn-white" href="'+attr(wa)+'" target="_blank" rel="noopener">واتساب المنظّم</a>':'')+'<button class="btn btn-white" id="copy">نسخ الرابط</button><button class="btn btn-white" id="guestpng">تنزيل البطاقة</button><button class="btn btn-white" id="guestqr">QR</button>'+(o.date?'<button class="btn btn-white" id="guestics">إضافة للتقويم</button>':'')+'</div><div id="qrholder"></div><p class="tiny">مشاركة الرابط متاحة لأي شخص يحصل عليه. هذه النسخة لا تجمع ردود الحضور في قاعدة بيانات.</p></div>';
+function renderRSVP(o){
+ if(o.rsvp===false)return '';
+ var phone=whatsapp(o.whatsapp||'');
+ var closed=/^\\d{4}-\\d{2}-\\d{2}$/.test(o.rsvpDeadline||'') && new Date(o.rsvpDeadline+'T23:59:59+03:00').getTime()<Date.now();
+ if(closed)return '<section class="rsvp-box"><h3>تأكيد الحضور</h3><p>انتهت مهلة تأكيد الحضور لهذه المناسبة.</p></section>';
+ if(!phone)return '<section class="rsvp-box"><h3>تأكيد الحضور أو الاعتذار</h3><p>لم يحدد صاحب الدعوة رقم استقبال الردود. يُرجى التواصل معه مباشرة.</p></section>';
+ var max=Math.min(10,Math.max(0,Number(o.maxCompanions)||0));
+ return '<section class="rsvp-box" id="rsvp-panel"><div class="eyebrow">RSVP · الرد على الدعوة</div><h3>هل ستشاركنا المناسبة؟</h3><p>اختر تأكيد الحضور أو الاعتذار، ثم اكتب اسمك. لا يصل الرد لصاحب الدعوة إلا بعد إرسال الرسالة في واتساب.</p><div class="rsvp-choices"><button type="button" class="rsvp-choice" id="rsvp-yes" aria-pressed="false">✓ سأحضر</button><button type="button" class="rsvp-choice decline" id="rsvp-no" aria-pressed="false">× أعتذر عن الحضور</button></div><div class="rsvp-form"><label for="rsvp-name">اسم الضيف</label><input id="rsvp-name" maxlength="90" autocomplete="name" placeholder="اكتب اسمك هنا"><div id="companion-wrap" class="hidden"><label for="rsvp-companions">عدد المرافقين (الحد الأقصى '+max+')</label><select id="rsvp-companions">'+Array.from({length:max+1},function(_,i){return '<option value="'+i+'">'+i+'</option>'}).join('')+'</select></div><label for="rsvp-note">ملاحظة للمنظّم (اختيارية)</label><textarea id="rsvp-note" maxlength="300" placeholder="رسالة قصيرة إن رغبت"></textarea><div class="rsvp-privacy">سيتم فتح واتساب برسالة تتضمن اسمك وردك وعدد المرافقين وملاحظتك. إرسالها يتطلب الضغط على زر الإرسال داخل واتساب. لا تحفظ منصة دعوات بيانات ردك على الخادم.</div><div class="rsvp-actions"><button class="btn btn-dark" id="rsvp-send" type="button" disabled>اختر الرد أولاً</button></div><p id="rsvp-status" role="status" aria-live="polite"></p></div></section>';
+}
+function setupRSVP(o){
+ var yes=app.querySelector('#rsvp-yes'),no=app.querySelector('#rsvp-no'),send=app.querySelector('#rsvp-send');if(!yes||!no||!send)return;
+ var response='';
+ function setResponse(value){
+  response=value;yes.setAttribute('aria-pressed',String(value==='yes'));no.setAttribute('aria-pressed',String(value==='no'));
+  app.querySelector('#companion-wrap').classList.toggle('hidden',value!=='yes');
+  send.disabled=false;send.textContent=value==='yes'?'إرسال تأكيد الحضور عبر واتساب':'إرسال الاعتذار عبر واتساب';
+ }
+ yes.onclick=function(){setResponse('yes')};no.onclick=function(){setResponse('no')};
+ send.onclick=function(){
+  var name=app.querySelector('#rsvp-name').value.trim().replace(/\\s+/g,' ');
+  if(name.length<2){app.querySelector('#rsvp-status').textContent='يرجى إدخال اسم الضيف (حرفان على الأقل).';app.querySelector('#rsvp-name').focus();return}
+  var companions=response==='yes'?Number(app.querySelector('#rsvp-companions').value):0;
+  if(!Number.isInteger(companions)||companions<0||companions>Math.min(10,Math.max(0,Number(o.maxCompanions)||0))){notify('عدد المرافقين غير صحيح');return}
+  var deadline=o.rsvpDeadline;
+  if(/^\\d{4}-\\d{2}-\\d{2}$/.test(deadline||'')&&Date.now()>new Date(deadline+'T23:59:59+03:00').getTime()){notify('انتهت مهلة الرد');return}
+  var status=response==='yes'?'تأكيد حضور':'اعتذار عن الحضور';
+  var notes=app.querySelector('#rsvp-note').value.trim();
+  var msg='رد على دعوة '+(o.names||o.title||o.kind)+'\\n'+
+   'الاسم: '+name+'\\nالحالة: '+status+'\\n'+
+   (response==='yes'?'المرافقون: '+companions+'\\n':'')+
+   (notes?'ملاحظة: '+notes+'\\n':'')+
+   'أُرسلت الرسالة من منصة دعوات';
+  var dest=whatsapp(o.whatsapp||'');
+  if(!dest){notify('لا يوجد رقم واتساب صالح لاستقبال الرد');return}
+  var w=window.open(dest+'?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+  app.querySelector('#rsvp-status').textContent=w?'تم فتح واتساب. يجب الضغط على إرسال هناك ليصل ردك.':'إذا لم يُفتح واتساب، فعّل النوافذ المنبثقة أو حاول مرة أخرى.';
+ };
+}
+function showGuest(o,fromPrint){
+var map=safeURL(o.maps||''),wa=whatsapp(o.whatsapp||'');
+app.innerHTML='<div class="container guest-view"><div class="eyebrow" style="text-align:center">DAWAT · INVITATION</div><div style="margin:20px 0">'+invite(o)+'</div><div class="guest-actions">'+(map?'<a class="btn btn-dark" href="'+attr(map)+'" target="_blank" rel="noopener">📍 الموقع على الخريطة</a>':'')+(wa?'<a class="btn btn-white" href="'+attr(wa)+'" target="_blank" rel="noopener">واتساب المنظّم</a>':'')+'<button class="btn btn-white" id="copy">نسخ الرابط</button><button class="btn btn-white" id="guestpng">تنزيل البطاقة</button><button class="btn btn-white" id="guestqr">QR</button>'+(o.date?'<button class="btn btn-white" id="guestics">إضافة للتقويم</button>':'')+'</div><div id="qrholder"></div>'+(!fromPrint?renderRSVP(o):'')+'<p class="tiny" style="text-align:center">مشاركة الرابط متاحة لكل من يحصل عليه. ردود الحضور تُرسل إلى المنظم عبر واتساب وليست في قاعدة بيانات مركزية.</p></div>';
 if(o.date)app.querySelector('#guestics').onclick=function(){makeICS(o)};
-app.querySelector('#copy').onclick=function(){copy(link(o))};app.querySelector('#guestpng').onclick=function(){exportPNG(o)};app.querySelector('#guestqr').onclick=function(){var el=app.querySelector('#qrholder');if(typeof QRCode==='undefined'){notify('مكتبة QR غير متاحة حالياً');return}el.innerHTML='';new QRCode(el,{text:link(o),width:180,height:180,colorDark:'#1d2d32',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});el.scrollIntoView({behavior:'smooth',block:'center'})};if(fromPrint)app.querySelector('.guest-actions').style.display='none'}
+app.querySelector('#copy').onclick=function(){copy(link(o))};
+app.querySelector('#guestpng').onclick=function(){exportPNG(o)};
+app.querySelector('#guestqr').onclick=function(){var el=app.querySelector('#qrholder');if(typeof QRCode==='undefined'){notify('مكتبة QR غير متاحة حالياً');return}el.innerHTML='';new QRCode(el,{text:link(o),width:180,height:180,colorDark:'#1d2d32',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});el.scrollIntoView({behavior:'smooth',block:'center'})};
+if(fromPrint)app.querySelector('.guest-actions').style.display='none';
+else setupRSVP(o);
+}
+
 function copy(t){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(function(){notify('تم نسخ الرابط')}).catch(function(){openLink(t)})}else openLink(t)}
 function openLink(t){var b=document.createElement('div');b.className='dialog';b.innerHTML='<div class="dialog-box"><h3>رابط الدعوة</h3><p class="tiny">انسخ الرابط لإرساله. يتضمن نصوص الدعوة، فلا تشارك معلومات خاصة.</p><textarea readonly></textarea><div class="dialog-actions"><button class="btn btn-dark">إغلاق</button></div></div>';document.body.appendChild(b);b.querySelector('textarea').value=t;b.querySelector('textarea').focus();b.querySelector('textarea').select();b.querySelector('button').onclick=function(){b.remove()}}
 function share(o){var t=link(o);if(navigator.share){navigator.share({title:'دعوة '+(o.names||o.title),url:t}).catch(function(){copy(t)})}else copy(t)}
