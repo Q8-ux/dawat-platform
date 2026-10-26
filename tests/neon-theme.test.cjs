@@ -18,6 +18,16 @@ test('3D Neon CSS enabled after base design', () => {
   assert.match(css, /rotateY\(/);
   assert.match(css, /backdrop-filter/);
 });
+test('has a selectable neon invitation group among 100 presets', () => {
+  const source = fs.readFileSync('assets/catalog.js', 'utf8');
+  const ctx = {}; vm.runInNewContext(source,ctx);
+  const neon = Array.from(ctx.DAWAT_CATALOG).filter(x=>x.palette==='night');
+  assert.equal(neon.length,5);
+  assert.match(neon[0].label,/نيون/);
+  assert.match(html,/data-palette/);
+  assert.match(css,/data-palette="night"/);
+  assert.match(html,/theme:'night'/);
+});
 test('neon remains motion and print accessible', () => {
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /@media print/);
