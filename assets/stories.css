@@ -1,0 +1,39 @@
+/* DAWAT Story Studio — 20 editable 9:16 artboards */
+.stories-intro{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;padding:26px;border:1px solid rgba(106,228,224,.38);border-radius:24px;background:radial-gradient(ellipse at 80% 20%,rgba(100,46,174,.22),transparent 55%),#0e1b36}
+.stories-intro h1{font:700 clamp(31px,4vw,47px) Amiri;margin:5px 0}
+.stories-intro p{color:#b6c6dd;font-size:13px;line-height:2}
+.story-hero-preview{height:240px;display:flex;align-items:center;justify-content:center;gap:12px;perspective:650px}
+.story-hero-preview img{height:210px;aspect-ratio:9/16;object-fit:cover;border-radius:8px;border:1px solid #b3dfe780;box-shadow:0 15px 32px #0008;transform:rotateY(-12deg) rotate(-3deg)}
+.story-hero-preview img:nth-child(2){transform:translateY(8px);z-index:2;height:230px}
+.story-hero-preview img:nth-child(3){transform:rotateY(9deg) rotate(4deg)}
+.story-filter{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 19px}
+.story-filter button{background:#1b3150;border:1px solid #4b7293;color:#dcecf7;padding:9px 13px;border-radius:25px;font:600 12px Cairo}
+.story-filter button[aria-pressed="true"]{background:linear-gradient(100deg,#42e9dc,#81abff);color:#071520;border-color:#b9fff8;font-weight:800}
+.stories-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:17px}
+.story-tile{background:linear-gradient(145deg,#1b2c4a,#0b1830);border:1px solid #4b729366;border-radius:17px;padding:9px;min-width:0;display:flex;flex-direction:column;text-align:center;color:#e3f7ff;box-shadow:0 14px 26px #0003;transition:transform .18s ease,border-color .18s ease}
+.story-tile:hover{transform:translateY(-5px);border-color:#5cf2e7;box-shadow:0 16px 30px #0006,0 0 16px #4dfcf033}
+.story-tile img{width:100%;aspect-ratio:9/16;object-fit:cover;background:#eee2d4;border-radius:10px;display:block}
+.story-tile strong{font:700 18px Amiri;margin-top:8px}
+.story-tile small{font:11px Cairo;color:#9db8d5;margin-bottom:8px}
+.story-tile .story-badge{font:11px Cairo;color:#97fff2;align-self:center;margin-bottom:7px}
+.story-tile .choose-label{background:linear-gradient(120deg,#3de9d9,#8ca8ff);color:#0a1830;border-radius:9px;padding:8px;font:800 12px Cairo;margin:0 5px 6px}
+.story-notice{color:#9db4cb;font:12px/2 Cairo;margin:20px 0}
+.story-invitation{width:min(100%,395px);height:auto;aspect-ratio:9/16;min-height:0;padding:32px 26px;border:0!important;display:flex;justify-content:center;align-items:center;gap:0;isolation:isolate;box-shadow:0 21px 48px #0006,0 0 20px #3bd9e922;background-size:cover;background-position:center;background-repeat:no-repeat;color:#382b24}
+.story-invitation:before,.story-invitation:after{content:none!important}
+.story-invitation .story-content{position:relative;z-index:1;width:100%;max-width:330px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 10px;border-radius:17px;background:rgba(255,255,252,.68);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:0 12px 34px #0000000c}
+.story-invitation[data-tone="light"] .story-content{background:rgba(4,13,24,.46);color:#fff3db;box-shadow:0 14px 38px #00000028}
+.story-invitation h2{font:700 clamp(29px,3.2vw,44px) Amiri!important;color:inherit!important;margin:2px 0}
+.story-invitation .over{font:700 16px Amiri;line-height:1.6}
+.story-invitation .message{font:19px/1.75 Amiri;margin:0}
+.story-invitation .details{font:700 16px/1.8 Amiri;margin-top:2px}
+.story-invitation .host{font:16px Amiri;margin:0}
+.story-invitation small{font:10px Cairo}
+.story-invitation .divider{margin:4px auto;width:40px}
+.story-selected{padding:10px 12px;border:1px solid #79d5d18c;border-radius:12px;background:#183044;color:#d4fefa;font:12px/2 Cairo}
+.story-selected a{color:#75fff0;text-decoration:underline}
+.story-export-hint{color:#a8c1dd;font:12px/1.9 Cairo;text-align:center}
+@media(max-width:1080px){.stories-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:720px){.stories-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.stories-intro{grid-template-columns:1fr}.story-hero-preview{height:170px}.story-hero-preview img{height:155px}.story-hero-preview img:nth-child(2){height:175px}}
+@media(max-width:440px){.stories-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.story-tile{padding:7px}.story-invitation{padding:25px}.story-invitation .story-content{padding:12px 7px}.story-invitation .message{font-size:16px}.story-invitation h2{font-size:31px!important}}
+@media(prefers-reduced-motion:reduce){.story-tile{transition:none}.story-tile:hover{transform:none}}
+@media print{.story-invitation .story-content{background:rgba(255,255,255,.55)!important;backdrop-filter:none!important} .story-invitation[data-tone="light"] .story-content{background:rgba(4,13,24,.38)!important;color:#fff!important}}
