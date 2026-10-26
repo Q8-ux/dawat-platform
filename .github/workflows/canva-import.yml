@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'data/canva/import-queue.json'
+      - 'data/canva/pro-collections.json'
       - 'assets/canva-approved/**'
 permissions:
   contents: write
@@ -20,17 +21,20 @@ jobs:
         with:
           persist-credentials: true
       - name: Import Canva records into GitHub JSON database
-        run: node scripts/import-canva.mjs --write
+        run: |
+          node scripts/import-canva.mjs --write
+          node scripts/import-canva-collections.mjs --write
       - name: Validate imports and website
         run: |
           node scripts/import-canva.mjs --check
+          node scripts/import-canva-collections.mjs --check
           node --test tests/*.test.cjs
       - name: Commit database only when content changes
         id: persist
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/canva/templates.json assets/canva-public.js
+          git add data/canva/templates.json assets/canva-public.js assets/canva-pro-collections.js
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Database already up to date."
