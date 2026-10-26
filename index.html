@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1925">
+<meta name="theme-color" content="#050a18">
 <meta name="description" content="دعوات DAWAT — صمّم وشارك دعوات مناسباتك بسهولة.">
 <title>دعوات | DAWAT — استوديو تصميم المناسبات</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,9 +58,10 @@ header{background:#0c1d29;color:#fff;position:sticky;top:0;z-index:20;border-bot
 .rsvp-actions .btn{width:100%}
 @media(max-width:450px){.rsvp-box{padding:15px}.rsvp-choice{font-size:11px}}
 </style>
+<link rel="stylesheet" href="assets/neon-3d.css?v=1">
 </head>
 <body>
-<header><div class="inner"><a class="brand" href="#/">✦ دَعَوات <span>DAWAT</span></a><nav aria-label="القائمة"><a href="#/">الرئيسية</a><a href="#/templates">القوالب</a><a href="#/dashboard">دعواتي</a><a href="#/paths">المسارات</a></nav><a href="#/studio" class="btn btn-gold btn-sm">+ تصميم دعوة</a></div></header>
+<header><div class="inner"><a class="brand" href="#/">✦ دَعَوات <span>3D NEON · DAWAT</span></a><nav aria-label="القائمة"><a href="#/">الرئيسية</a><a href="#/templates">القوالب</a><a href="#/dashboard">دعواتي</a><a href="#/paths">المسارات</a></nav><a href="#/studio" class="btn btn-gold btn-sm">+ تصميم دعوة</a></div></header>
 <main id="app"></main>
 <div id="toast" role="status"></div>
 <footer><div class="footer-links"><a href="#/">الرئيسية</a><a href="#/dashboard">دعواتي</a><a href="https://www.canva.com/create/invitations/" target="_blank" rel="noopener">تصميم جديد في Canva</a></div>© 2026 DAWAT · استوديو مستقل لتصميم دعوات المناسبات</footer>
@@ -91,7 +92,7 @@ function formatDate(d){if(!d)return 'موعد المناسبة يحدد لاحق
 function invite(item){var t=preset(item.theme);
 return '<article class="invite-card catalog-card" data-layout="'+t.layout+'" style="'+cardStyle(t)+'" id="visual-card"><p class="over">'+esc(t.motif)+' '+esc(item.host||'دعوة كريمة')+'</p><div class="divider"></div><p class="over">'+esc(item.kind||'مناسبة سعيدة')+'</p><h2>'+esc(item.names||item.title||'دعوتنا لكم')+'</h2><div class="divider"></div><p class="message">'+esc(item.message||'يسرنا حضوركم ومشاركتكم فرحتنا')+'</p><div class="details">'+esc(formatDate(item.date))+(item.time?'<div>'+esc(item.time)+'</div>':'')+'</div><p class="host">'+esc(item.venue||'')+'</p><small>بحضوركم تكتمل فرحتنا ✦</small></article>'
 }
-function showHome(){app.innerHTML='<div class="container"><section class="hero"><div class="hero-copy"><div class="eyebrow">DAWAT · INVITATION STUDIO</div><h1>كل مناسبة تستحق<br>دعوة لا تُنسى</h1><p>صمّم دعوتك العربية في دقائق، اختر من قوالب احتفالية أنيقة، ثم شارك رابطاً أو نزّل بطاقة جاهزة للواتساب والطباعة.</p><div class="actions"><a class="btn btn-gold" href="#/studio">ابدأ تصميم دعوتك ✧</a><a href="#/templates" class="btn btn-outline">استعرض القوالب</a></div></div><div class="hero-art"><div class="hero-card"><div class="fl">✦</div><span class="script">دعوة زفاف</span><small>ليلة تملؤها الفرحة</small><div style="font:25px Amiri;margin:18px 0">✧</div><small>أهلاً وسهلاً بكم</small></div></div></section><section class="t-section"><div class="eyebrow">تجربة بسيطة وفاخرة</div><h2>من الفكرة إلى الدعوة</h2><p>اختيار التصميم وإدخال المعلومات ومشاركة النتيجة من أي جهاز.</p><div class="cards"><div class="card"><div class="feature">❖</div><strong>100 نموذج متنوع</strong><p>100 نموذج مستقل المعاينة، موزّع على ثماني مناسبات وعشرين لوناً وخمسة أساليب فنية.</p></div><div class="card"><div class="feature">✎</div><strong>تحرير مباشر</strong><p>أسماء وتاريخ ومكان ورسالة الدعوة مع معاينة فورية.</p></div><div class="card"><div class="feature">▧</div><strong>صور ومشاركة</strong><p>تنزيل البطاقة PNG أو مشاركة رابط للضيف عبر التطبيقات.</p></div><div class="card"><div class="feature">◇</div><strong>بدون تسجيل</strong><p>احفظ مسوداتك في متصفحك. لا تُرسل بياناتك إلى خادم المنصة.</p></div></div></section><section class="t-section"><div class="eyebrow">هويتك ومناسبتك</div><h2>قوالب تناسب كل فرحة</h2><div class="templates" id="home-templates"></div></section></div>';tiles(document.querySelector('#home-templates'),catalog.slice(0,6))}
+function showHome(){app.innerHTML='<div class="container"><section class="hero"><div class="hero-copy"><div class="eyebrow">DAWAT · NEON 3D INVITATION STUDIO</div><h1>كل مناسبة تستحق<br>دعوة لا تُنسى</h1><p>صمّم دعوتك العربية في دقائق، اختر من قوالب احتفالية أنيقة، ثم شارك رابطاً أو نزّل بطاقة جاهزة للواتساب والطباعة.</p><div class="actions"><a class="btn btn-gold" href="#/studio">ابدأ تصميم دعوتك ✧</a><a href="#/templates" class="btn btn-outline">استعرض القوالب</a></div></div><div class="hero-art"><div class="hero-card"><div class="fl">✦</div><span class="script">دعوة زفاف</span><small>ليلة تملؤها الفرحة</small><div style="font:25px Amiri;margin:18px 0">✧</div><small>أهلاً وسهلاً بكم</small></div></div></section><section class="t-section"><div class="eyebrow">تجربة بسيطة وفاخرة</div><h2>من الفكرة إلى الدعوة</h2><p>اختيار التصميم وإدخال المعلومات ومشاركة النتيجة من أي جهاز.</p><div class="cards"><div class="card"><div class="feature">❖</div><strong>100 نموذج متنوع</strong><p>100 نموذج مستقل المعاينة، موزّع على ثماني مناسبات وعشرين لوناً وخمسة أساليب فنية.</p></div><div class="card"><div class="feature">✎</div><strong>تحرير مباشر</strong><p>أسماء وتاريخ ومكان ورسالة الدعوة مع معاينة فورية.</p></div><div class="card"><div class="feature">▧</div><strong>صور ومشاركة</strong><p>تنزيل البطاقة PNG أو مشاركة رابط للضيف عبر التطبيقات.</p></div><div class="card"><div class="feature">◇</div><strong>بدون تسجيل</strong><p>احفظ مسوداتك في متصفحك. لا تُرسل بياناتك إلى خادم المنصة.</p></div></div></section><section class="t-section"><div class="eyebrow">هويتك ومناسبتك</div><h2>قوالب تناسب كل فرحة</h2><div class="templates" id="home-templates"></div></section></div>';tiles(document.querySelector('#home-templates'),catalog.slice(0,6))}
 function tiles(el,list){
 el.innerHTML=(list||catalog).map(function(t){return '<button class="template" type="button" data-theme="'+t.id+'"><div class="mini-card catalog-card" data-layout="'+t.layout+'" style="'+cardStyle(t)+'"><b>'+esc(t.motif)+'<br>'+esc(t.title)+'</b><small>'+esc(t.kind)+'</small></div><label>'+esc(t.label)+'</label><span class="template-tag">'+esc(t.kind)+'</span></button>'}).join('');
 el.querySelectorAll('[data-theme]').forEach(function(b){b.addEventListener('click',function(){choose(b.dataset.theme)})});
@@ -171,7 +172,7 @@ function link(o){return location.origin+location.pathname+'#/invite/'+encode(o)}
 function renderRSVP(o){
  if(o.rsvp===false)return '';
  var phone=whatsapp(o.whatsapp||'');
- var closed=/^\\d{4}-\\d{2}-\\d{2}$/.test(o.rsvpDeadline||'') && new Date(o.rsvpDeadline+'T23:59:59+03:00').getTime()<Date.now();
+ var closed=/^\d{4}-\d{2}-\d{2}$/.test(o.rsvpDeadline||'') && new Date(o.rsvpDeadline+'T23:59:59+03:00').getTime()<Date.now();
  if(closed)return '<section class="rsvp-box"><h3>تأكيد الحضور</h3><p>انتهت مهلة تأكيد الحضور لهذه المناسبة.</p></section>';
  if(!phone)return '<section class="rsvp-box"><h3>تأكيد الحضور أو الاعتذار</h3><p>لم يحدد صاحب الدعوة رقم استقبال الردود. يُرجى التواصل معه مباشرة.</p></section>';
  var max=Math.min(10,Math.max(0,Number(o.maxCompanions)||0));
@@ -187,23 +188,23 @@ function setupRSVP(o){
  }
  yes.onclick=function(){setResponse('yes')};no.onclick=function(){setResponse('no')};
  send.onclick=function(){
-  var name=app.querySelector('#rsvp-name').value.trim().replace(/\\s+/g,' ');
+  var name=app.querySelector('#rsvp-name').value.trim().replace(/\s+/g,' ');
   if(name.length<2){app.querySelector('#rsvp-status').textContent='يرجى إدخال اسم الضيف (حرفان على الأقل).';app.querySelector('#rsvp-name').focus();return}
   var companions=response==='yes'?Number(app.querySelector('#rsvp-companions').value):0;
   if(!Number.isInteger(companions)||companions<0||companions>Math.min(10,Math.max(0,Number(o.maxCompanions)||0))){notify('عدد المرافقين غير صحيح');return}
   var deadline=o.rsvpDeadline;
-  if(/^\\d{4}-\\d{2}-\\d{2}$/.test(deadline||'')&&Date.now()>new Date(deadline+'T23:59:59+03:00').getTime()){notify('انتهت مهلة الرد');return}
+  if(/^\d{4}-\d{2}-\d{2}$/.test(deadline||'')&&Date.now()>new Date(deadline+'T23:59:59+03:00').getTime()){notify('انتهت مهلة الرد');return}
   var status=response==='yes'?'تأكيد حضور':'اعتذار عن الحضور';
   var notes=app.querySelector('#rsvp-note').value.trim();
-  var msg='رد على دعوة '+(o.names||o.title||o.kind)+'\\n'+
-   'الاسم: '+name+'\\nالحالة: '+status+'\\n'+
-   (response==='yes'?'المرافقون: '+companions+'\\n':'')+
-   (notes?'ملاحظة: '+notes+'\\n':'')+
+  var msg='رد على دعوة '+(o.names||o.title||o.kind)+'\n'+
+   'الاسم: '+name+'\nالحالة: '+status+'\n'+
+   (response==='yes'?'المرافقون: '+companions+'\n':'')+
+   (notes?'ملاحظة: '+notes+'\n':'')+
    'أُرسلت الرسالة من منصة دعوات';
   var dest=whatsapp(o.whatsapp||'');
   if(!dest){notify('لا يوجد رقم واتساب صالح لاستقبال الرد');return}
-  var w=window.open(dest+'?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
-  app.querySelector('#rsvp-status').textContent=w?'تم فتح واتساب. يجب الضغط على إرسال هناك ليصل ردك.':'إذا لم يُفتح واتساب، فعّل النوافذ المنبثقة أو حاول مرة أخرى.';
+  window.open(dest+'?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+  app.querySelector('#rsvp-status').textContent='تم تجهيز الرسالة في واتساب. اضغط على إرسال هناك حتى يستلم المنظم ردّك.';
  };
 }
 function showGuest(o,fromPrint){
