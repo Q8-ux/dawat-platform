@@ -48,3 +48,13 @@ test('no embedded foreign projects or credentials in story assets',()=>{
    for(const bad of ['sabeq','lovable.app','chatgpt.site','service_role','sk-proj-']) assert.ok(!body.includes(bad),path+':'+bad);
  }
 });
+
+test('story cards keep correct 9:16 proportions across viewport sizes',()=>{
+ assert.match(css,/STORY CARD SIZE FIX v2/);
+ assert.match(css,/aspect-ratio:9\s*\/\s*16/);
+ assert.match(css,/object-fit:contain/);
+ assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+ assert.match(css,/\.preview-area \.invite-card\.story-invitation/);
+ assert.match(css,/max-height:94%/);
+ assert.match(html,/assets\/stories\.css\?v=2/);
+});
