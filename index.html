@@ -34,6 +34,8 @@ header{background:#0c1d29;color:#fff;position:sticky;top:0;z-index:20;border-bot
 .catalog-count{font:12px Cairo;color:#847f75;margin:9px 0}
 #catalog-more{display:block;margin:22px auto}
 @media(max-width:500px){.catalog-filters input,.catalog-filters select{width:100%}}
+@media(max-width:750px){header .inner{flex-wrap:wrap;justify-content:space-between}header nav{order:3;width:100%;justify-content:center;flex-wrap:wrap;gap:15px}header nav a:nth-child(1){display:inline!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -81,7 +83,7 @@ function render(){
  var filtered=catalog.filter(function(t){return (!cat||t.kind===cat)&&(!q||[t.label,t.kind,t.title].join(' ').toLowerCase().includes(q))});
  tiles(document.getElementById('all-templates'),filtered.slice(0,limit));
  document.getElementById('catalog-count').textContent='عرض '+Math.min(limit,filtered.length)+' من '+filtered.length+' نموذج';
- document.getElementById('catalog-more').hidden=filtered.length<=limit;
+ document.getElementById('catalog-more').classList.toggle('hidden',filtered.length<=limit);
 }
 ['catalog-search','catalog-category'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){limit=24;render()})});
 document.getElementById('catalog-more').onclick=function(){limit+=24;render()};render();
