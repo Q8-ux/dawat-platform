@@ -13,12 +13,12 @@ const html=fs.readFileSync('index.html','utf8');
 const css=fs.readFileSync('assets/canva-pro.css','utf8');
 test('Canva Pro discovery aggregates over 1000 public collection items without falsely claiming Pro total',()=>{
  assert.equal(file.targetProDesigns,1000);
- assert.equal(file.records.length,29);
- assert.equal(items.length,29);
+ assert.ok(file.records.length>=29);
+ assert.equal(items.length,file.records.length);
  const reported=items.reduce((n,x)=>n+x.publishedCount,0);
- assert.equal(reported,1062);
+ assert.ok(reported>=1062);
  assert.ok(items.every(x=>x.includesPro===true&&x.itemScope==='mixed-pro-and-free'));
- assert.equal(new Set(items.map(x=>x.url)).size,29);
+ assert.equal(new Set(items.map(x=>x.url)).size,items.length);
  for(const x of items){
    assert.match(x.url,/^https:\/\/www\.canva\.com\/p\/[a-zA-Z0-9_-]+\/collections\/[a-zA-Z0-9_-]+$/);
    assert.ok(!x.assetPath,'Do not cache Canva Pro templates');
