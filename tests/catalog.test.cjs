@@ -9,7 +9,7 @@ const sandbox = {};
 vm.runInNewContext(catalogSource, sandbox, { timeout: 1000 });
 const templates = sandbox.DAWAT_CATALOG;
 const html = fs.readFileSync('index.html', 'utf8');
-const inlineScripts = [...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/g)].map(x => x[1]).filter(Boolean);
+const inlineScripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x => x[1]).filter(Boolean);
 
 test('100 real, distinct templates exist', () => {
   assert.equal(templates.length, 100);
