@@ -4,15 +4,14 @@ const escape = value => String(value==null?"":value).replace(/[&<>"']/g,c=>({"&"
 const all = () => root.DAWAT_STORIES || [];
 const find = id => all().find(x=>x.id===id) || null;
 function page(app,onSelect) {
- app.innerHTML='<div class="container"><section class="stories-intro"><div><div class="eyebrow">STORY INVITATIONS · 9:16</div><h1>ستوريات الأفراح والمناسبات</h1><p>عشرون خلفية جديدة فارغة من الكتابة بمقاس ستوري 1080 × 1920. اختر التصميم، واكتب أسماء المناسبة وموعدها، ثم شارك الدعوة.</p><div class="actions"><a class="btn btn-gold" href="#/studio">إنشاء دعوة</a><a class="btn btn-white" href="#/templates">مكتبة 100 قالب</a></div></div><div class="story-hero-preview"><img loading="lazy" src="assets/story-art/02-botanical-garden.svg" alt="زخرفة نباتية"><img loading="lazy" src="assets/story-art/03-black-and-gold.svg" alt="زخرفة ذهبية"><img loading="lazy" src="assets/story-art/07-blush-cherry-blossom.svg" alt="زخرفة وردية"></div></section><div id="story-categories" class="story-filter" aria-label="تصنيف المناسبة"></div><p id="story-count" class="catalog-count"></p><div class="stories-grid" id="story-gallery"></div><p class="story-notice">هذه رسوم SVG أصلية من المشروع الجديد تمثّل الاتجاهات العشرين بصرياً. الصور الفوتوغرافية PNG التي شاهدتها سابقاً ما زالت في حزمة التحميل المنفصلة ولم تُرفع إلى المستودع.</p></div>';
+ app.innerHTML='<div class="container"><section class="stories-intro"><div><div class="eyebrow">STORY INVITATIONS · 9:16</div><h1>ستوريات الأفراح والمناسبات</h1><p>عشرون خلفية جديدة فارغة من الكتابة بمقاس ستوري 1080 × 1920. اختر التصميم، واكتب أسماء المناسبة وموعدها، ثم شارك الدعوة.</p><div class="actions"><a class="btn btn-gold" href="#/studio">إنشاء دعوة</a><a class="btn btn-white" href="#/templates">مكتبة 100 قالب</a></div></div><div class="story-hero-preview"><img loading="lazy" src="assets/story-art/02-botanical-garden.svg" alt="زخرفة نباتية"><img loading="lazy" src="assets/story-art/03-black-and-gold.svg" alt="زخرفة ذهبية"><img loading="lazy" src="assets/story-art/07-blush-cherry-blossom.svg" alt="زخرفة وردية"></div></section><div id="story-categories" class="story-filter" aria-label="تصنيف المناسبة"></div><p id="story-count" class="catalog-count"></p><div class="stories-grid" id="story-gallery"></div><p class="story-notice">هذه خلفيات SVG أصلية قابلة للاستخدام في المحرر والتصدير، وليست ملفات PNG الأصلية المعروضة في المحادثة. ملفات PNG محفوظة في حزمة التنزيل المنفصلة.</p></div>';
  const kinds=['الكل',...new Set(all().map(x=>x.kind))];let current='الكل';
  const cat=app.querySelector('#story-categories'),grid=app.querySelector('#story-gallery'),count=app.querySelector('#story-count');
  function paint(){
   cat.innerHTML=kinds.map(k=>'<button type="button" data-kind="'+escape(k)+'" aria-pressed="'+String(k===current)+'">'+escape(k)+'</button>').join('');
   const visible=all().filter(x=>current==='الكل'||x.kind===current);
   count.textContent='عرض '+visible.length+' من 20 ستوري';
-  grid.innerHTML=visible.map(x=>'<button type="button" class="story-tile" data-story="'+x.id+'"><img src="'+x.photo+'" data-fallback="'+x.src+'" alt="'+escape(x.name)+'، خلفية خالية من النص" width="1080" height="1920" loading="lazy"><strong>'+escape(x.name)+'</strong><small>'+escape(x.kind)+' · 9:16</small><span class="choose-label">استخدم التصميم</span></button>').join('');
-  grid.querySelectorAll('img[data-fallback]').forEach(img=>img.onerror=()=>{img.onerror=null;img.src=img.dataset.fallback});
+  grid.innerHTML=visible.map(x=>'<button type="button" class="story-tile" data-story="'+x.id+'"><img src="'+x.src+'" alt="'+escape(x.name)+'، خلفية خالية من النص" width="1080" height="1920" loading="lazy"><strong>'+escape(x.name)+'</strong><small>'+escape(x.kind)+' · 9:16</small><span class="choose-label">استخدم التصميم</span></button>').join('');
   cat.querySelectorAll('button').forEach(b=>b.onclick=()=>{current=b.dataset.kind;paint()});
   grid.querySelectorAll('button').forEach(b=>b.onclick=()=>onSelect(b.dataset.story));
  }
@@ -21,7 +20,7 @@ function page(app,onSelect) {
 function invite(item,formatDate) {
  const t=find(item.story);if(!t)return '';
  const line = (item.message||'تكتمل فرحتنا بوجودكم');
- return '<article class="invite-card story-invitation" style="background-image:url(&quot;'+t.photo+'&quot;),url(&quot;'+t.src+'&quot;)" data-tone="'+t.tone+'" id="visual-card"><div class="story-content"><p class="over">'+escape(item.host||'دعوة كريمة')+'</p><div class="divider"></div><p class="over">'+escape(item.kind||t.kind)+'</p><h2>'+escape(item.names||item.title||t.name)+'</h2><div class="divider"></div><p class="message">'+escape(line)+'</p><div class="details">'+escape(formatDate(item.date))+(item.time?'<div>'+escape(item.time)+'</div>':'')+'</div><p class="host">'+escape(item.venue||'')+'</p><small>بحضوركم تكتمل فرحتنا ✦</small></div></article>';
+ return '<article class="invite-card story-invitation" style="background-image:url(&quot;'+t.src+'&quot;)" data-tone="'+t.tone+'" id="visual-card"><div class="story-content"><p class="over">'+escape(item.host||'دعوة كريمة')+'</p><div class="divider"></div><p class="over">'+escape(item.kind||t.kind)+'</p><h2>'+escape(item.names||item.title||t.name)+'</h2><div class="divider"></div><p class="message">'+escape(line)+'</p><div class="details">'+escape(formatDate(item.date))+(item.time?'<div>'+escape(item.time)+'</div>':'')+'</div><p class="host">'+escape(item.venue||'')+'</p><small>بحضوركم تكتمل فرحتنا ✦</small></div></article>';
 }
 function lines(ctx,word,width) {
  const result=[];let line='';
@@ -55,11 +54,8 @@ function exportPNG(item,formatDate,notify){
       },'image/png');
     }catch(e){reject(e)}
   };
-  image.onerror=()=>{
-    if(image.src.endsWith('.png')){image.src=t.src;return}
-    reject(new Error('Failed to read story asset'));
-  };
-  image.src=t.photo;
+  image.onerror=()=>reject(new Error('Failed to read story asset'));
+  image.src=t.src;
  });
 }
 root.DAWAT_STORY_UI={page,find,invite,exportPNG};
