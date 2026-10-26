@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "collection": "DAWAT_CANVA_PRO_DISCOVERY",
   "targetProDesigns": 1000,
-  "note": "Official public Canva creator collections that display Pro items. publishedCount is a total collection count, NOT verified Pro count or a deduplicated number. No private Canva projects or assets copied.",
+  "note": "Canva public creator collections for Gulf-first wedding, عقد قران, زفاف, ملكة and engagement discovery. Collection totals mix Pro/Free and may duplicate.",
   "records": [
     {
       "id": "collection-001",
@@ -14,7 +14,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 1
     },
     {
       "id": "collection-002",
@@ -26,7 +27,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 1
     },
     {
       "id": "collection-003",
@@ -38,7 +40,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 1
     },
     {
       "id": "collection-004",
@@ -50,7 +53,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-005",
@@ -62,7 +66,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 1
     },
     {
       "id": "collection-006",
@@ -74,7 +79,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-007",
@@ -86,7 +92,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-008",
@@ -98,7 +105,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-009",
@@ -110,7 +118,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 1
     },
     {
       "id": "collection-010",
@@ -122,7 +131,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-011",
@@ -134,7 +144,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-012",
@@ -146,7 +157,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-013",
@@ -158,7 +170,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-014",
@@ -170,7 +183,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-015",
@@ -182,7 +196,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-016",
@@ -194,7 +209,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-017",
@@ -206,7 +222,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-018",
@@ -218,7 +235,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-019",
@@ -230,7 +248,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-020",
@@ -242,7 +261,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-021",
@@ -254,7 +274,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-022",
@@ -266,7 +287,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-023",
@@ -278,7 +300,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-024",
@@ -290,7 +313,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-025",
@@ -302,7 +326,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-026",
@@ -314,7 +339,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
     },
     {
       "id": "collection-027",
@@ -326,7 +352,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-028",
@@ -338,7 +365,8 @@
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
-      "itemScope": "mixed-pro-and-free"
+      "itemScope": "mixed-pro-and-free",
+      "priority": 2
     },
     {
       "id": "collection-029",
@@ -347,6 +375,46 @@
       "creator": "Lentari Studio",
       "publishedCount": 13,
       "url": "https://www.canva.com/p/lentaristudio/collections/AZyu83FWftzqtk3NlmcQ8Q",
+      "includesPro": true,
+      "recordType": "canva-public-creator-collection",
+      "access": "view-and-edit-on-canva",
+      "itemScope": "mixed-pro-and-free",
+      "priority": 3
+    },
+    {
+      "id": "collection-030",
+      "category": "زفاف",
+      "title": "دعوات الزفاف العربية — StudioGego",
+      "creator": "StudioGego",
+      "publishedCount": 51,
+      "url": "https://www.canva.com/p/studiogego/collections/AZVzVf8Iz5bija3kO8RuRw",
+      "priority": 0,
+      "includesPro": true,
+      "recordType": "canva-public-creator-collection",
+      "access": "view-and-edit-on-canva",
+      "itemScope": "mixed-pro-and-free"
+    },
+    {
+      "id": "collection-032",
+      "category": "زفاف",
+      "title": "دعوات زفاف ومناسبات عربية — قوالب",
+      "creator": "Qwaleb | قوالب",
+      "publishedCount": 19,
+      "url": "https://www.canva.com/p/qwaleb/collections/AYtors9EzAp2EcyQ8ossfg",
+      "priority": 0,
+      "includesPro": true,
+      "recordType": "canva-public-creator-collection",
+      "access": "view-and-edit-on-canva",
+      "itemScope": "mixed-pro-and-free"
+    },
+    {
+      "id": "collection-034",
+      "category": "زفاف",
+      "title": "زفاف عربي وإعلانات عقد القران — Dania Freih",
+      "creator": "Dania Freih",
+      "publishedCount": 19,
+      "url": "https://www.canva.com/p/dania-f/collections/AYrmWGcBXwuHwFAUif6B_w",
+      "priority": 0,
       "includesPro": true,
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
