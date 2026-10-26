@@ -39,6 +39,8 @@ test('gallery, editor and sharing use the same story IDs',()=>{
  assert.match(html,/story:storyUI&&storyUI\.find\(o\.story\)/);
  assert.match(css,/\.story-invitation/);
  assert.match(ui,/canvas\.width=1080;canvas\.height=1920/);
+ assert.doesNotMatch(ui,/img\.dataset\.fallback|image\.src=t\.photo|background-image:url\(&quot;'\+t\.photo/);
+ assert.match(ui,/image\.src=t\.src/);
 });
 test('no embedded foreign projects or credentials in story assets',()=>{
  for(const path of ['assets/stories.js','assets/story-ui.js','assets/stories.css']){
