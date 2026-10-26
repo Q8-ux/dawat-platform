@@ -34,6 +34,16 @@ jobs:
           assert not any(x in t.lower() for x in ('sabeq','lovable.app','chatgpt.site'))
           print('DAWAT standalone verification: PASS')
           PY
+      - name: Enable GitHub Pages if allowed by repository token
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${GITHUB_REPOSITORY}/pages" >/dev/null 2>&1; then
+            echo "GitHub Pages already enabled"
+          else
+            echo "Pages not configured; attempting to enable through API"
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/pages" -f build_type=workflow >/dev/null
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
