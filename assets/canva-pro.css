@@ -1,0 +1,19 @@
+/* Canva Pro collection directory: public links only, no Canva images rehosted. */
+.pro-collection-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin:17px 0 26px}
+.pro-collection-card{display:flex;flex-direction:column;min-height:210px;padding:18px;border:1px solid rgba(107,156,235,.36);border-radius:18px;background:linear-gradient(140deg,rgba(29,45,87,.95),rgba(11,26,52,.96));color:#f0f7ff;box-shadow:0 15px 30px #0003;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.pro-collection-card:hover{transform:translateY(-4px);border-color:#7ffff4;box-shadow:0 16px 38px #0006,0 0 20px #5af9ee20}
+.pro-collection-card:focus-visible{outline:3px solid #74fff0;outline-offset:3px}
+.pro-collection-top{display:flex;gap:6px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+.pro-collection-count{font:11px Cairo,sans-serif;color:#c4d5ff}
+.pro-collection-card strong{font:700 24px/1.45 Amiri,serif;display:block;overflow-wrap:anywhere}
+.pro-collection-card p{color:#aec6dd;font:12px Cairo;margin:8px 0 14px}
+.pro-collection-bottom{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:6px;border-top:1px solid #728bb93d;padding-top:13px}
+.pro-collection-bottom span{color:#aac5e1;font:11px Cairo}
+.pro-collection-bottom b{color:#6bffee;font:700 11px Cairo}
+.pro-path-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:26px}
+#pro-sort{min-height:44px;background:#15233e;border-radius:10px;border:1px solid #5684ad;color:#ebf7ff;padding:8px 12px;font:12px Cairo}
+@media(max-width:1150px){.pro-collection-grid,.pro-path-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:780px){.pro-collection-grid,.pro-path-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.pro-collection-grid,.pro-path-cards{grid-template-columns:1fr 1fr;gap:10px}.pro-collection-card{min-height:200px;padding:11px}.pro-collection-card strong{font-size:20px}.pro-collection-top{align-items:flex-start;flex-direction:column}.canva-top aside strong{font-size:23px}#pro-sort{width:100%}}
+@media(max-width:335px){.pro-collection-grid,.pro-path-cards{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.pro-collection-card{transition:none}.pro-collection-card:hover{transform:none}}
