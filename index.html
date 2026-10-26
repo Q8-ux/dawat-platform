@@ -60,15 +60,17 @@ header{background:#0c1d29;color:#fff;position:sticky;top:0;z-index:20;border-bot
 </style>
 <link rel="stylesheet" href="assets/neon-3d.css?v=1">
 <link rel="stylesheet" href="assets/stories.css?v=2">
+<link rel="stylesheet" href="assets/canva-public.css?v=1">
 </head>
 <body>
-<header><div class="inner"><a class="brand" href="#/">✦ دَعَوات <span>3D NEON · DAWAT</span></a><nav aria-label="القائمة"><a href="#/">الرئيسية</a><a href="#/templates">القوالب</a><a href="#/stories">الستوريات</a><a href="#/dashboard">دعواتي</a><a href="#/paths">المسارات</a></nav><a href="#/studio" class="btn btn-gold btn-sm">+ تصميم دعوة</a></div></header>
+<header><div class="inner"><a class="brand" href="#/">✦ دَعَوات <span>3D NEON · DAWAT</span></a><nav aria-label="القائمة"><a href="#/">الرئيسية</a><a href="#/templates">قوالب Canva</a><a href="#/dashboard">دعواتي المحفوظة</a></nav><a href="https://www.canva.com/invitations/templates/" class="btn btn-gold btn-sm" target="_blank" rel="noopener noreferrer">افتح Canva</a></div></header>
 <main id="app"></main>
 <div id="toast" role="status"></div>
-<footer><div class="footer-links"><a href="#/">الرئيسية</a><a href="#/dashboard">دعواتي</a><a href="https://www.canva.com/create/invitations/" target="_blank" rel="noopener">تصميم جديد في Canva</a></div>© 2026 DAWAT · استوديو مستقل لتصميم دعوات المناسبات</footer>
+<footer><div class="footer-links"><a href="#/">قوالب Canva</a><a href="https://www.canva.com/templates/" target="_blank" rel="noopener noreferrer">موقع Canva</a></div>DAWAT · دليل روابط القوالب العامة من Canva · بدون استيراد أي مشاريع خاصة</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script><script src="assets/catalog.js"></script>
 <script src="assets/stories.js"></script>
 <script src="assets/story-ui.js"></script>
+<script src="assets/canva-public.js"></script>
 <script>
 (function(){
 'use strict';
@@ -261,13 +263,22 @@ var works=[
 ];
 app.innerHTML='<div class="container"><div class="eyebrow">DAWAT · WORKFLOWS</div><h1 style="font:700 40px Amiri">مسارات منصة دعوات</h1><p class="subtitle">المسارات النشطة تعمل دون نظام حسابات مركزي. المسارات المخطط لها لا ندّعي أنها متصلة أو مفعلة.</p><div class="cards">'+works.map(function(w){return '<div class="card"><strong>'+esc(w[0])+'</strong><span class="pill" style="margin-top:9px;'+(w[1]!=='نشط'?'background:#fff1dd;color:#99652d':'')+'">'+esc(w[1])+'</span><p>'+esc(w[2])+'</p></div>'}).join('')+'</div></div>';
 }
-function route(){var h=location.hash||'#/';if(h.startsWith('#/invite/')){var o=decode(h.slice(9));if(o)showGuest(o);else app.innerHTML='<div class="container"><div class="empty">رابط الدعوة غير صالح.</div></div>';return}if(h==='#/dashboard'){dashboard();return}if(h==='#/templates'){templatesPage();return}
-if(h==='#/stories'&&storyUI){storyUI.page(app,function(id){
- var t=storyUI.find(id);if(!t)return;
- editing=null;state.story=t.id;state.kind=t.kind;state.title=t.name;state.names='';
- state.host='يسرّنا دعوتكم';state.message='بكل محبة نتشرف بحضوركم ومشاركتكم فرحتنا.';
- location.hash='#/studio';
-});return}if(h==='#/paths'){pathsPage();return}if(h==='#/studio'){studio();return}showHome()}
+function canvaPage(){
+var cards=window.DAWAT_CANVA_PUBLIC||[];
+app.innerHTML='<div class="canva-shell"><section class="canva-top"><div><div class="eyebrow">PUBLIC CANVA INVITATION LIBRARY</div><h1>بطاقات Canva الأصلية فقط</h1><p>هذه المجموعة تضم أسماء قوالب حقيقية منشورة في Canva للزفاف والخطوبة والتخرج والمواليد والتهاني. لن تجد هنا تصاميم دعوات التي أنشأناها سابقاً، ولن نفتح أياً من مشاريعك الخاصة.</p></div><aside><strong>20 بطاقة من Canva</strong><p>اختر المناسبة، ثم افتح مجموعة Canva الرسمية التي يظهر فيها التصميم بالاسم الإنجليزي الموضح.</p><p>معاينة البطاقة وتعديلها وتنزيلها تتم داخل Canva بحسابك.</p></aside></section><div class="canva-filters" id="canva-categories"></div><div class="canva-searchbar"><input type="search" id="canva-query" placeholder="ابحث عن المناسبة أو القالب" aria-label="البحث في قوالب Canva"><p id="canva-count" aria-live="polite"></p></div><div class="canva-list" id="canva-cards"></div><div class="canva-note">القوالب من مكتبة Canva العامة؛ التعديل والتنزيل يتمان في Canva نفسها. الروابط تفتح صفحة المجموعة الرسمية التي تحتوي على القالب بالاسم المذكور، وليست رابطاً مباشراً إلى تصميم محفوظ في حسابك. لا نستضيف صور Canva أو ملفاتها، ولا نعرض محتوى مشروعاتك.</div></div>';
+var categories=['الكل'].concat(Array.from(new Set(cards.map(function(c){return c.category}))));
+var active='الكل',filter=app.querySelector('#canva-categories'),results=app.querySelector('#canva-cards'),input=app.querySelector('#canva-query'),count=app.querySelector('#canva-count');
+function paint(){
+filter.innerHTML=categories.map(function(c){return '<button type="button" data-filter="'+esc(c)+'" aria-pressed="'+(active===c)+'">'+esc(c)+'</button>'}).join('');
+var q=input.value.trim().toLocaleLowerCase();
+var showing=cards.filter(function(c){return (active==='الكل'||c.category===active)&&(!q||(c.name+' '+c.canvaTitle+' '+c.category).toLocaleLowerCase().includes(q))});
+results.innerHTML=showing.length?showing.map(function(c,i){return '<a class="canva-item" href="'+attr(c.url)+'" target="_blank" rel="noopener noreferrer" aria-label="افتح قالب Canva: '+attr(c.name)+'"><div class="canva-item-top"><span class="canva-brand">Canva</span><span class="canva-number">'+esc(c.id)+'</span></div><h2>'+esc(c.name)+'</h2><p class="canva-official" dir="ltr">'+esc(c.canvaTitle)+'</p><div class="canva-item-bottom"><span>'+esc(c.category)+'</span><b>عرض القالب على Canva</b></div></a>'}).join(''):'<div class="canva-empty">لا توجد قوالب مطابقة. غيّر البحث أو اختر جميع المناسبات.</div>';
+count.textContent='عرض '+showing.length+' من '+cards.length+' قالباً';
+filter.querySelectorAll('[data-filter]').forEach(function(b){b.onclick=function(){active=b.dataset.filter;paint()}});
+}
+input.addEventListener('input',paint);paint();
+}
+function route(){var h=location.hash||'#/';if(h.startsWith('#/invite/')){var o=decode(h.slice(9));if(o)showGuest(o);else app.innerHTML='<div class="container"><div class="empty">رابط الدعوة غير صالح.</div></div>';return}if(h==='#/dashboard'){dashboard();return}if(h==='#/studio'){studio();return}if(h==='#/paths'){pathsPage();return}canvaPage()}
 window.addEventListener('hashchange',route);route();
 })();
 </script>
