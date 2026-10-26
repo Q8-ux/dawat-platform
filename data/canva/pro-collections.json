@@ -419,6 +419,19 @@
       "recordType": "canva-public-creator-collection",
       "access": "view-and-edit-on-canva",
       "itemScope": "mixed-pro-and-free"
+    },
+    {
+      "id": "collection-033",
+      "category": "زفاف",
+      "title": "دعوات عربية: خطوبة وملكة وزفاف وعقد قران",
+      "creator": "Arabic templates",
+      "publishedCount": 26,
+      "url": "https://www.canva.com/p/an-mh-design/collections/AZOYtImSOxCPr6mpuH-now",
+      "priority": 0,
+      "includesPro": true,
+      "recordType": "canva-public-creator-collection",
+      "access": "view-and-edit-on-canva",
+      "itemScope": "mixed-pro-and-free"
     }
   ]
 }
