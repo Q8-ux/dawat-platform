@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-label="رخام عاجي - خلفية ستوري فارغة">
+<defs>
+<linearGradient id="paper" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fcfaf5"/><stop offset=".55" stop-color="#fcfaf5"/><stop offset="1" stop-color="#fcfaf5"/></linearGradient>
+<filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.8"/></filter>
+<filter id="texture" x="0" y="0" width="100%" height="100%"><feTurbulence baseFrequency=".025" numOctaves="2" result="n" seed="4"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".026"/></feComponentTransfer></filter>
+</defs>
+<rect width="1080" height="1920" fill="url(#paper)"/>
+<rect width="1080" height="1920" filter="url(#texture)" opacity=".18"/>
+<path d="M80 0 C 330 300 40 450 500 700 S 220 1250 740 1400 S 620 1650 940 1920" fill="none" stroke="#c5a372" stroke-width="8" opacity=".7"/><path d="M110 0 Q430 450 580 710 T 760 1440 T 960 1900" fill="none" stroke="#d4c5ac" stroke-width="25" opacity=".32"/><path d="M800 0 Q650 280 990 490 M0 1240 Q300 1300 200 1920" fill="none" stroke="#c5a372" stroke-width="5" opacity=".56"/>
+<rect x="38" y="38" width="1004" height="1844" rx="18" stroke="#c5a372" stroke-width="2" fill="none" opacity=".30"/>
+<rect x="56" y="56" width="968" height="1808" rx="18" stroke="#c5a372" stroke-width="1.5" fill="none" opacity=".19"/>
+</svg>
