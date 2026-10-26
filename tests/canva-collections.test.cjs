@@ -1,0 +1,41 @@
+'use strict';
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const {spawnSync}=require('node:child_process');
+const file=JSON.parse(fs.readFileSync('data/canva/pro-collections.json','utf8'));
+const box={};
+vm.runInNewContext(fs.readFileSync('assets/canva-pro-collections.js','utf8'),box,{timeout:1000});
+const items=Array.from(box.DAWAT_CANVA_PRO_COLLECTIONS||[]);
+const ui=fs.readFileSync('assets/canva-pro-ui.js','utf8');
+const html=fs.readFileSync('index.html','utf8');
+const css=fs.readFileSync('assets/canva-pro.css','utf8');
+test('Canva Pro discovery aggregates over 1000 public collection items without falsely claiming Pro total',()=>{
+ assert.equal(file.targetProDesigns,1000);
+ assert.equal(file.records.length,29);
+ assert.equal(items.length,29);
+ const reported=items.reduce((n,x)=>n+x.publishedCount,0);
+ assert.equal(reported,1062);
+ assert.ok(items.every(x=>x.includesPro===true&&x.itemScope==='mixed-pro-and-free'));
+ assert.equal(new Set(items.map(x=>x.url)).size,29);
+ for(const x of items){
+   assert.match(x.url,/^https:\/\/www\.canva\.com\/p\/[a-zA-Z0-9_-]+\/collections\/[a-zA-Z0-9_-]+$/);
+   assert.ok(!x.assetPath,'Do not cache Canva Pro templates');
+ }
+});
+test('GitHub Canva source produces exact generated browser artifact',()=>{
+ const result=spawnSync(process.execPath,['scripts/import-canva-collections.mjs','--check'],{encoding:'utf8'});
+ assert.equal(result.status,0,result.stderr+result.stdout);
+});
+test('Canva Pro UI is routable, accessible and links outside without accessing user data',()=>{
+ assert.doesNotThrow(()=>new vm.Script(ui));
+ assert.match(html,/assets\/canva-pro-collections\.js/);
+ assert.match(html,/assets\/canva-pro-ui\.js/);
+ assert.match(html,/assets\/canva-pro\.css/);
+ assert.match(html,/#\/canva-path/);
+ assert.match(ui,/rel="noopener noreferrer"/);
+ assert.match(ui,/mixed|Pro \+ مجاني|Pro ومجاني/);
+ assert.match(ui,/target: 1,000|1,000 تصميم Pro/);
+ assert.match(css,/\.pro-collection-grid/);
+});
