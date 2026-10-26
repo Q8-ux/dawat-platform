@@ -39,3 +39,18 @@ test('Canva Pro UI is routable, accessible and links outside without accessing u
  assert.match(ui,/target: 1,000|1,000 تصميم Pro/);
  assert.match(css,/\.pro-collection-grid/);
 });
+
+
+test('Arabic Gulf weddings have top-level priority in Canva Pro gallery',()=>{
+ const sources=JSON.parse(fs.readFileSync('data/canva/pro-collections.json','utf8'));
+ const x=sources.records.filter(t=>t.priority===0);
+ assert.ok(x.length>=4);
+ assert.ok(x.every(t=>t.category==='زفاف'));
+ const verified=JSON.parse(fs.readFileSync('data/canva/verified-pro.json','utf8'));
+ assert.ok(verified.records.filter(t=>t.marketFocus==='arabic-gulf').length>=40);
+ const ui=fs.readFileSync('assets/canva-pro-ui.js','utf8');
+ assert.match(ui,/الأفراح العربية والخليجية أولاً/);
+ assert.match(ui,/sort\.value==='gulf'/);
+ const html=fs.readFileSync('index.html','utf8');
+ assert.doesNotMatch(html,/\<small\>بحضوركم تكتمل فرحتنا/);
+});
