@@ -20,7 +20,7 @@ function page(app,onSelect) {
 function invite(item,formatDate) {
  const t=find(item.story);if(!t)return '';
  const line = (item.message||'تكتمل فرحتنا بوجودكم');
- return '<article class="invite-card story-invitation" style="background-image:url(&quot;'+t.src+'&quot;)" data-tone="'+t.tone+'" id="visual-card"><div class="story-content"><p class="over">'+escape(item.host||'دعوة كريمة')+'</p><div class="divider"></div><p class="over">'+escape(item.kind||t.kind)+'</p><h2>'+escape(item.names||item.title||t.name)+'</h2><div class="divider"></div><p class="message">'+escape(line)+'</p><div class="details">'+escape(formatDate(item.date))+(item.time?'<div>'+escape(item.time)+'</div>':'')+'</div><p class="host">'+escape(item.venue||'')+'</p><small>بحضوركم تكتمل فرحتنا ✦</small></div></article>';
+ return '<article class="invite-card story-invitation" style="background-image:url(&quot;'+t.src+'&quot;)" data-tone="'+t.tone+'" id="visual-card"><div class="story-content"><p class="over">'+escape(item.host||'دعوة كريمة')+'</p><div class="divider"></div><p class="over">'+escape(item.kind||t.kind)+'</p><h2>'+escape(item.names||item.title||t.name)+'</h2><div class="divider"></div><p class="message">'+escape(line)+'</p><div class="details">'+escape(formatDate(item.date))+(item.time?'<div>'+escape(item.time)+'</div>':'')+'</div><p class="host">'+escape(item.venue||'')+'</p></div></article>';
 }
 function lines(ctx,word,width) {
  const result=[];let line='';
