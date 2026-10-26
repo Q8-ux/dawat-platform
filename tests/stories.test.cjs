@@ -33,7 +33,8 @@ test('gallery, editor and sharing use the same story IDs',()=>{
  assert.match(html,/assets\/story-ui\.js/);
  assert.match(html,/assets\/stories\.css/);
  assert.match(html,/href="#\/stories"/);
- assert.match(html,/storyUI\.page\(app/);
+ assert.match(html,/function canvaPage\(\)/);
+ assert.match(html,/canvaPage\(\)/);
  assert.match(html,/storyUI\.invite\(item,formatDate\)/);
  assert.match(html,/storyUI\.exportPNG\(o,formatDate,notify\)/);
  assert.match(html,/story:storyUI&&storyUI\.find\(o\.story\)/);
