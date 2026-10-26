@@ -29,8 +29,8 @@ test('RSVP scripts remain valid and correctly escape values', () => {
   assert.doesNotThrow(()=>new vm.Script(app));
   const rsvp=app.slice(app.indexOf('function renderRSVP(o)'),app.indexOf('function copy(t)'));
   assert.match(rsvp,/function setupRSVP\(o\)/);
-  assert.ok(rsvp.includes('/^\\d{4}-\\d{2}-\\d{2}$/'));
-  assert.ok(rsvp.includes('/\\s+/g'));
+  assert.ok(rsvp.includes(String.raw`/^\d{4}-\d{2}-\d{2}$/`));
+  assert.ok(rsvp.includes(String.raw`/\s+/g`));
   assert.ok(rsvp.includes("msg='رد على دعوة '"));
   assert.ok(rsvp.includes("encodeURIComponent(msg)"));
   assert.ok(!rsvp.includes("var w=window.open"));
