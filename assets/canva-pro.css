@@ -17,3 +17,21 @@
 @media(max-width:500px){.pro-collection-grid,.pro-path-cards{grid-template-columns:1fr 1fr;gap:10px}.pro-collection-card{min-height:200px;padding:11px}.pro-collection-card strong{font-size:20px}.pro-collection-top{align-items:flex-start;flex-direction:column}.canva-top aside strong{font-size:23px}#pro-sort{width:100%}}
 @media(max-width:335px){.pro-collection-grid,.pro-path-cards{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.pro-collection-card{transition:none}.pro-collection-card:hover{transform:none}}
+
+
+/* Individual verified Pro names (metadata only). */
+.pro-verified-section{margin-top:35px;padding-top:20px;border-top:1px solid #74b8e744}
+.pro-verified-section h2{font:700 31px Amiri;color:#f1fffd;margin:0 0 8px}
+.pro-verified-section>p{font:12px/2 Cairo;color:#bbd0e2;margin:0 0 18px}
+.pro-verified-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pro-verified-card{display:flex;flex-direction:column;min-height:165px;gap:8px;padding:16px;background:#102442;border:1px solid #5295b05c;border-radius:15px;color:#f1fdff;transition:border-color .2s ease,transform .2s ease}
+.pro-verified-card:hover{border-color:#66f5ef;transform:translateY(-3px)}
+.pro-verified-card strong{font:700 19px/1.55 Cairo,sans-serif;overflow-wrap:anywhere}
+.pro-verified-card small{font:11px Cairo;color:#a7c9e1}
+.pro-verified-card b{font:700 11px Cairo;color:#79fff3;margin-top:auto}
+.pro-verified-badge{align-self:flex-start;border-radius:24px;background:#155b63;border:1px solid #6debd785;color:#bafff1;padding:3px 10px;font:700 11px Cairo}
+@media(max-width:1120px){.pro-verified-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:780px){.pro-verified-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:440px){.pro-verified-card{padding:11px}.pro-verified-card strong{font-size:15px}}
+@media(max-width:335px){.pro-verified-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.pro-verified-card{transition:none}.pro-verified-card:hover{transform:none}}
