@@ -11,7 +11,8 @@ function page(app,onSelect) {
   cat.innerHTML=kinds.map(k=>'<button type="button" data-kind="'+escape(k)+'" aria-pressed="'+String(k===current)+'">'+escape(k)+'</button>').join('');
   const visible=all().filter(x=>current==='الكل'||x.kind===current);
   count.textContent='عرض '+visible.length+' من 20 ستوري';
-  grid.innerHTML=visible.map(x=>'<button type="button" class="story-tile" data-story="'+x.id+'"><img src="'+x.src+'" alt="'+escape(x.name)+'، خلفية خالية من النص" width="1080" height="1920" loading="lazy"><strong>'+escape(x.name)+'</strong><small>'+escape(x.kind)+' · 9:16</small><span class="choose-label">استخدم التصميم</span></button>').join('');
+  grid.innerHTML=visible.map(x=>'<button type="button" class="story-tile" data-story="'+x.id+'"><img src="'+x.photo+'" data-fallback="'+x.src+'" alt="'+escape(x.name)+'، خلفية خالية من النص" width="1080" height="1920" loading="lazy"><strong>'+escape(x.name)+'</strong><small>'+escape(x.kind)+' · 9:16</small><span class="choose-label">استخدم التصميم</span></button>').join('');
+  grid.querySelectorAll('img[data-fallback]').forEach(img=>img.onerror=()=>{img.onerror=null;img.src=img.dataset.fallback});
   cat.querySelectorAll('button').forEach(b=>b.onclick=()=>{current=b.dataset.kind;paint()});
   grid.querySelectorAll('button').forEach(b=>b.onclick=()=>onSelect(b.dataset.story));
  }
@@ -20,7 +21,7 @@ function page(app,onSelect) {
 function invite(item,formatDate) {
  const t=find(item.story);if(!t)return '';
  const line = (item.message||'تكتمل فرحتنا بوجودكم');
- return '<article class="invite-card story-invitation" style="background-image:url(&quot;'+t.src+'&quot;)" data-tone="'+t.tone+'" id="visual-card"><div class="story-content"><p class="over">'+escape(item.host||'دعوة كريمة')+'</p><div class="divider"></div><p class="over">'+escape(item.kind||t.kind)+'</p><h2>'+escape(item.names||item.title||t.name)+'</h2><div class="divider"></div><p class="message">'+escape(line)+'</p><div class="details">'+escape(formatDate(item.date))+(item.time?'<div>'+escape(item.time)+'</div>':'')+'</div><p class="host">'+escape(item.venue||'')+'</p><small>بحضوركم تكتمل فرحتنا ✦</small></div></article>';
+ return '<article class="invite-card story-invitation" style="background-image:url(&quot;'+t.photo+'&quot;),url(&quot;'+t.src+'&quot;)" data-tone="'+t.tone+'" id="visual-card"><div class="story-content"><p class="over">'+escape(item.host||'دعوة كريمة')+'</p><div class="divider"></div><p class="over">'+escape(item.kind||t.kind)+'</p><h2>'+escape(item.names||item.title||t.name)+'</h2><div class="divider"></div><p class="message">'+escape(line)+'</p><div class="details">'+escape(formatDate(item.date))+(item.time?'<div>'+escape(item.time)+'</div>':'')+'</div><p class="host">'+escape(item.venue||'')+'</p><small>بحضوركم تكتمل فرحتنا ✦</small></div></article>';
 }
 function lines(ctx,word,width) {
  const result=[];let line='';
@@ -54,8 +55,11 @@ function exportPNG(item,formatDate,notify){
       },'image/png');
     }catch(e){reject(e)}
   };
-  image.onerror=()=>reject(new Error('Failed to read story asset'));
-  image.src=t.src;
+  image.onerror=()=>{
+    if(image.src.endsWith('.png')){image.src=t.src;return}
+    reject(new Error('Failed to read story asset'));
+  };
+  image.src=t.photo;
  });
 }
 root.DAWAT_STORY_UI={page,find,invite,exportPNG};
