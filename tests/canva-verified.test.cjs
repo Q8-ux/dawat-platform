@@ -25,11 +25,11 @@ test('78 Pro-labeled template titles from official public collections, not 1000 
   assert.doesNotMatch(item.title,/نكاح|nikah|nikaah/i);
  }
 });
-test('Verified Pro sources and JS catalog are synchronized and accessible',()=>{
+test('historical verified references stay synchronized and invisible to public pages',()=>{
  const r=spawnSync(process.execPath,['scripts/import-canva-verified.mjs','--check'],{encoding:'utf8'});
  assert.equal(r.status,0,r.stderr+r.stdout);
- assert.match(html,/assets\/canva-verified\.js/);
- assert.match(ui,/verifiedList\(\)/);
- assert.match(ui,/pro-verified-grid/);
+ assert.doesNotMatch(html,/assets\/canva-verified\.js|assets\/canva-pro-ui\.js/);
+ assert.match(html,/storyUI\.page\(app/);
  assert.doesNotThrow(()=>new vm.Script(ui));
 });
+
