@@ -28,18 +28,13 @@ test('GitHub Canva source produces exact generated browser artifact',()=>{
  const result=spawnSync(process.execPath,['scripts/import-canva-collections.mjs','--check'],{encoding:'utf8'});
  assert.equal(result.status,0,result.stderr+result.stdout);
 });
-test('Canva Pro UI is routable, accessible and links outside without accessing user data',()=>{
+test('archived third-party source remains safe but is not shipped to the website UI',()=>{
  assert.doesNotThrow(()=>new vm.Script(ui));
- assert.match(html,/assets\/canva-pro-collections\.js/);
- assert.match(html,/assets\/canva-pro-ui\.js/);
- assert.match(html,/assets\/canva-pro\.css/);
- assert.match(html,/#\/canva-path/);
- assert.match(ui,/rel="noopener noreferrer"/);
- assert.match(ui,/mixed|Pro \+ مجاني|Pro ومجاني/);
- assert.match(ui,/target: 1,000|1,000 تصميم Pro/);
+ assert.doesNotMatch(html,/assets\/canva-pro-collections\.js|assets\/canva-pro-ui\.js|assets\/canva-pro\.css/);
+ assert.doesNotMatch(html,/#\/canva-path/);
+ assert.match(html,/storyUI\.page\(app/);
  assert.match(css,/\.pro-collection-grid/);
 });
-
 
 test('Arabic Gulf weddings have top-level priority in Canva Pro gallery',()=>{
  const sources=JSON.parse(fs.readFileSync('data/canva/pro-collections.json','utf8'));
