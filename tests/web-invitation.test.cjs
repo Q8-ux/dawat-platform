@@ -30,7 +30,7 @@ test('up to four contact cards generate separate safe WhatsApp links',()=>{
  assert.deepEqual(contacts.map(x=>x.url),['https://wa.me/96555510001','https://wa.me/96555510002','https://wa.me/96555510003']);
  assert.equal(web.whatsappURL('not-a-number'),'');
  assert.equal(web.embeddedMap('https://evilgoogle.com/maps?q=1,2'),'');
- assert.match(web.embeddedMap('https://www.google.com/maps/search/?api=1&query=29,48'),/^https:\/\/maps\.google\.com\/maps\?/);
+ assert.match(web.embeddedMap('https://www.google.com/maps/search/?api=1&query=29,48'),/^https:\/\/www\.google\.com\/maps\?/);
  assert.match(web.embeddedMap('https://www.google.com/maps/place/Test/@29.3,48.1,16z'),/29\.3%2C48\.1/);
 });
 

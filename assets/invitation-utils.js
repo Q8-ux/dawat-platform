@@ -42,7 +42,7 @@ function mapQuery(value,fallback){
  }catch(error){return ''}
 }
 function embeddedMapURL(value,fallback){
- var query=mapQuery(value,fallback);return query?'https://maps.google.com/maps?q='+encodeURIComponent(query)+'&z=16&output=embed&hl=ar':'';
+ var query=mapQuery(value,fallback);return query?'https://www.google.com/maps?q='+encodeURIComponent(query)+'&z=16&output=embed&hl=ar':'';
 }
 function qrPayloadFits(value,maxBytes){
  var limit=Number(maxBytes)||1800,text=String(value||'');
