@@ -34,16 +34,21 @@ jobs:
           from pathlib import Path
           p=Path('index.html')
           t=p.read_text(encoding='utf-8')
+          app=Path('assets/app.js').read_text(encoding='utf-8')
           assert '<html lang="ar" dir="rtl">' in t
           for v in ('theme-royal','theme-emerald','localStorage','exportPNG','showGuest'):
-              assert v in t, v
-          assert '<script>' in t
+              assert v in t+app, v
+          assert '<script>' not in t
+          assert 'assets/app.js' in t and 'assets/invitation-utils.js' in t
           assert not any(x in t.lower() for x in ('sabeq','lovable.app','chatgpt.site'))
           print('DAWAT standalone verification: PASS')
           PY
       - name: Run catalog and JavaScript checks
         run: |
           node --check assets/catalog.js
+          node --check assets/app.js
+          node --check assets/invitation-utils.js
+          node --check assets/web-invitation.js
           node --check assets/canva-pro-ui.js
           node --check assets/canva-pro-collections.js
           node --check assets/canva-verified.js
@@ -52,14 +57,20 @@ jobs:
         run: |
           mkdir -p dist/assets
           cp index.html dist/index.html
-          cp assets/catalog.js assets/stories.js assets/story-ui.js assets/stories.css assets/neon-3d.css dist/assets/
+          cp assets/app.js assets/catalog.js assets/stories.js assets/story-ui.js assets/stories.css assets/neon-3d.css assets/invitation-utils.js assets/web-invitation.js assets/web-invitation.css dist/assets/
           cp -R assets/story-art dist/assets/story-art
+          cp -R assets/vendor dist/assets/vendor
+          cp -R assets/fonts dist/assets/fonts
           python3 - <<'PY'
           from pathlib import Path
           d=Path("dist")
           html=(d/"index.html").read_text(encoding="utf-8")
-          assert "assets/story-ui.js" in html and "assets/stories.js" in html
-          assert "storyUI.page(app" in html
+          app=(d/"assets/app.js").read_text(encoding="utf-8")
+          assert "assets/story-ui.js" in html and "assets/stories.js" in html and "assets/web-invitation.js" in html and "assets/app.js" in html
+          assert "storyUI.page(app" in app
+          assert (d/"assets/vendor/qrcode.min.js").is_file()
+          assert (d/"assets/fonts/Amiri-Regular.ttf").is_file()
+          assert (d/"assets/fonts/Cairo-Variable.woff2").is_file()
           assert "canva" not in html.lower().replace("canvas","")
           assert "www.canva.com" not in html
           images=list((d/"assets/story-art").glob("*.svg"))

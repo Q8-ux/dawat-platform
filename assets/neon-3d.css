@@ -103,7 +103,7 @@ section>p,.subtitle,.card p,.tiny,.preview-top .note,.template-tag,.catalog-coun
 .hero-card .script {color:#fdfdff;text-shadow:0 0 14px rgba(130,112,255,.45);transform:translateZ(36px)}
 .hero-card small {color:#d8cfff}
 @keyframes neon-float {0%,100%{transform:rotate(-7deg) rotateY(-14deg) rotateX(7deg) translateY(1px)}50%{transform:rotate(-5deg) rotateY(-9deg) rotateX(5deg) translateY(-13px)}}
-.card,.panel,.saved-card,.rsvp-box,.dialog-box {
+.card,.panel,.saved-card,.dialog-box {
   color:#e8f3ff;
   background:linear-gradient(150deg,rgba(25,37,74,.92),rgba(14,24,48,.95));
   border:1px solid rgba(100,173,246,.27);
@@ -114,16 +114,16 @@ section>p,.subtitle,.card p,.tiny,.preview-top .note,.template-tag,.catalog-coun
 .card:hover {transform:translateY(-6px) rotateX(1deg);border-color:rgba(83,242,247,.65);box-shadow:0 21px 45px rgba(0,0,0,.35),0 0 18px rgba(77,252,240,.10)}
 .card strong,.saved-card b {color:#f0ffff}
 .feature {color:#5efff0;filter:drop-shadow(0 0 10px rgba(76,255,241,.34))}
-.panel h3,.rsvp-box h3,.dialog-box h3{color:#f7fcff}
+.panel h3,.dialog-box h3{color:#f7fcff}
 .fields input,.fields textarea,.fields select,.field input,.field textarea,.field select,
-.catalog-filters input,.catalog-filters select,.rsvp-form input,.rsvp-form select,.rsvp-form textarea,.dialog-box textarea {
+.catalog-filters input,.catalog-filters select,.dialog-box textarea {
   background:#0c1933;color:#f0f9ff;border:1px solid rgba(111,152,216,.40);border-radius:10px;
   box-shadow:inset 0 3px 6px rgba(0,0,0,.11);
 }
-.fields input::placeholder,.fields textarea::placeholder,.catalog-filters input::placeholder,.rsvp-form input::placeholder,.rsvp-form textarea::placeholder {color:#91a5c2}
+.fields input::placeholder,.fields textarea::placeholder,.catalog-filters input::placeholder {color:#91a5c2}
 .fields input:focus,.fields textarea:focus,.fields select:focus,.field input:focus,.field textarea:focus,.field select:focus,
-.catalog-filters input:focus,.catalog-filters select:focus,.rsvp-form input:focus {border-color:#6afff3;box-shadow:0 0 0 3px rgba(75,244,236,.15)}
-.field label,.rsvp-form label,.preview-top {color:#d3e6ff}
+.catalog-filters input:focus,.catalog-filters select:focus {border-color:#6afff3;box-shadow:0 0 0 3px rgba(75,244,236,.15)}
+.field label,.preview-top {color:#d3e6ff}
 .preview-area {
   background:radial-gradient(circle at 50% 37%,rgba(76,102,207,.15),transparent 60%),linear-gradient(150deg,#101d3c,#10152e);
   border:1px solid rgba(79,204,240,.28);box-shadow:inset 0 0 40px rgba(44,61,129,.12),0 24px 48px rgba(0,0,0,.24);
@@ -150,19 +150,11 @@ section>p,.subtitle,.card p,.tiny,.preview-top .note,.template-tag,.catalog-coun
 .saved-card {border-radius:18px}
 .saved-card small {color:#aebcd4}
 .pill {background:#173d48;color:#82fff2;border:1px solid rgba(80,235,214,.30)}
-.notice,.rsvp-privacy {
+.notice {
   background:rgba(42,42,71,.62);border:1px solid rgba(190,137,244,.4);color:#e7d4ff;
 }
 .empty {border-color:rgba(88,193,222,.43);color:#acc7d9}
-.rsvp-settings {background:rgba(15,35,63,.78);border-color:rgba(93,230,239,.33)}
-.rsvp-settings h4 {color:#f0fcff}
-.rsvp-switch input {accent-color:#60f5eb}
-.rsvp-box p,.guest-view p {color:#b6cbe0}
-.rsvp-choice {background:#102540;color:#e9f8ff;border-color:#365879}
-.rsvp-choice:hover {border-color:#66e8ee}
-.rsvp-choice[aria-pressed="true"] {background:#0c5149;color:#ecfffb;border-color:#59f5df}
-.rsvp-choice.decline[aria-pressed="true"] {background:#593044;color:#fff2f5;border-color:#ff8ca9}
-#rsvp-status {color:#9dece6}
+.guest-view p {color:#b6cbe0}
 .qr-wrap,#qrholder canvas,#qrholder img {background:#fff}
 .catalog-count {color:#b6c8e0}
 footer {background:rgba(5,12,28,.96);border-top:1px solid rgba(102,211,242,.19);color:#aabbd2}
@@ -183,7 +175,6 @@ footer {background:rgba(5,12,28,.96);border-top:1px solid rgba(102,211,242,.19);
   html,body {background:white!important;color:#222}
   body:before,body:after {display:none!important}
   .guest-view .invite-card.catalog-card {transform:none!important;box-shadow:none!important}
-  .rsvp-box {display:none!important}
 }
 
 

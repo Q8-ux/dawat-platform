@@ -6,8 +6,7 @@ const vm = require('node:vm');
 
 const html = fs.readFileSync('index.html','utf8');
 const css = fs.readFileSync('assets/neon-3d.css','utf8');
-const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
-const app = scripts[0]||'';
+const app = fs.readFileSync('assets/app.js','utf8');
 
 test('3D Neon CSS enabled after base design', () => {
   assert.match(html, /<link rel="stylesheet" href="assets\/neon-3d\.css\?v=1">/);
@@ -24,26 +23,17 @@ test('has a selectable neon invitation group among 100 presets', () => {
   const neon = Array.from(ctx.DAWAT_CATALOG).filter(x=>x.palette==='night');
   assert.equal(neon.length,5);
   assert.match(neon[0].label,/نيون/);
-  assert.match(html,/data-palette/);
+  assert.match(app,/data-palette/);
   assert.match(css,/data-palette="night"/);
-  assert.match(html,/theme:'night'/);
+  assert.match(app,/theme:'night'/);
 });
 test('neon remains motion and print accessible', () => {
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /@media print/);
   assert.match(css, /\.invite-card\.catalog-card/);
-  assert.match(css, /\.rsvp-choice/);
 });
-test('RSVP scripts remain valid and correctly escape values', () => {
-  assert.equal(scripts.length,1);
+test('application script remains valid after removing attendance and calendar flows', () => {
   assert.doesNotThrow(()=>new vm.Script(app));
-  const rsvp=app.slice(app.indexOf('function renderRSVP(o)'),app.indexOf('function copy(t)'));
-  assert.match(rsvp,/function setupRSVP\(o\)/);
-  assert.ok(rsvp.includes(String.raw`/^\d{4}-\d{2}-\d{2}$/`));
-  assert.ok(rsvp.includes(String.raw`/\s+/g`));
-  assert.ok(rsvp.includes("msg='رد على دعوة '"));
-  assert.ok(rsvp.includes("encodeURIComponent(msg)"));
-  assert.ok(!rsvp.includes("var w=window.open"));
-  assert.ok(!rsvp.includes(String.raw`\\d`));
-  assert.ok(!rsvp.includes(String.raw`\\s`));
+  const publicSource=[html,app,css,fs.readFileSync('assets/web-invitation.css','utf8')].join('\n').toLowerCase();
+  for(const removed of ['renderrsvp','setuprsvp','makeics','guestics','rsvp','إضافة للتقويم','تأكيد الحضور'])assert.ok(!publicSource.includes(removed),removed);
 });

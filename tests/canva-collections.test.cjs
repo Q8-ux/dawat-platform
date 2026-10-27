@@ -10,6 +10,7 @@ vm.runInNewContext(fs.readFileSync('assets/canva-pro-collections.js','utf8'),box
 const items=Array.from(box.DAWAT_CANVA_PRO_COLLECTIONS||[]);
 const ui=fs.readFileSync('assets/canva-pro-ui.js','utf8');
 const html=fs.readFileSync('index.html','utf8');
+const app=fs.readFileSync('assets/app.js','utf8');
 const css=fs.readFileSync('assets/canva-pro.css','utf8');
 test('Canva Pro discovery aggregates over 1000 public collection items without falsely claiming Pro total',()=>{
  assert.equal(file.targetProDesigns,1000);
@@ -32,7 +33,7 @@ test('archived third-party source remains safe but is not shipped to the website
  assert.doesNotThrow(()=>new vm.Script(ui));
  assert.doesNotMatch(html,/assets\/canva-pro-collections\.js|assets\/canva-pro-ui\.js|assets\/canva-pro\.css/);
  assert.doesNotMatch(html,/#\/canva-path/);
- assert.match(html,/storyUI\.page\(app/);
+ assert.match(app,/storyUI\.page\(app/);
  assert.match(css,/\.pro-collection-grid/);
 });
 

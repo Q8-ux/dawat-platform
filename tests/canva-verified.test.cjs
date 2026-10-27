@@ -9,6 +9,7 @@ const scope={};
 vm.runInNewContext(fs.readFileSync('assets/canva-verified.js','utf8'),scope,{timeout:1000});
 const list=Array.from(scope.DAWAT_CANVA_VERIFIED_PRO||[]);
 const html=fs.readFileSync('index.html','utf8');
+const app=fs.readFileSync('assets/app.js','utf8');
 const ui=fs.readFileSync('assets/canva-pro-ui.js','utf8');
 test('78 Pro-labeled template titles from official public collections, not 1000 fabricated assets',()=>{
  assert.equal(source.target,1000);
@@ -29,7 +30,7 @@ test('historical verified references stay synchronized and invisible to public p
  const r=spawnSync(process.execPath,['scripts/import-canva-verified.mjs','--check'],{encoding:'utf8'});
  assert.equal(r.status,0,r.stderr+r.stdout);
  assert.doesNotMatch(html,/assets\/canva-verified\.js|assets\/canva-pro-ui\.js/);
- assert.match(html,/storyUI\.page\(app/);
+ assert.match(app,/storyUI\.page\(app/);
  assert.doesNotThrow(()=>new vm.Script(ui));
 });
 

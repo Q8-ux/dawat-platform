@@ -8,6 +8,7 @@ const context = {};
 vm.runInNewContext(fs.readFileSync('assets/stories.js','utf8'),context,{timeout:1000});
 const stories = Array.from(context.DAWAT_STORIES || []);
 const html = fs.readFileSync('index.html','utf8');
+const app = fs.readFileSync('assets/app.js','utf8');
 const css = fs.readFileSync('assets/stories.css','utf8');
 const ui = fs.readFileSync('assets/story-ui.js','utf8');
 
@@ -34,10 +35,10 @@ test('gallery, editor and sharing use the same story IDs',()=>{
  assert.match(html,/assets\/stories\.css/);
  assert.match(html,/href="#\/templates"/);
  assert.doesNotMatch(html,/function canvaPage\(\)/);
- assert.match(html,/storyUI\.page\(app/);
- assert.match(html,/storyUI\.invite\(item,formatDate\)/);
- assert.match(html,/storyUI\.exportPNG\(o,formatDate,notify\)/);
- assert.match(html,/story:storyUI&&storyUI\.find\(o\.story\)/);
+ assert.match(app,/storyUI\.page\(app/);
+ assert.match(app,/storyUI\.invite\(item,formatDate\)/);
+ assert.match(app,/storyUI\.exportPNG\(o,formatDate,notify\)/);
+ assert.match(app,/story:storyUI&&storyUI\.find\(o\.story\)/);
  assert.match(css,/\.story-invitation/);
  assert.match(ui,/canvas\.width=1080;canvas\.height=1920/);
  assert.doesNotMatch(ui,/img\.dataset\.fallback|image\.src=t\.photo|background-image:url\(&quot;'\+t\.photo/);
@@ -61,10 +62,10 @@ test('story cards keep correct 9:16 proportions across viewport sizes',()=>{
 });
 
 test('studio uses hosted story artwork rather than redirected catalog links',()=>{
- assert.match(html,/data-story/);
- assert.match(html,/studio-story-template/);
- assert.match(html,/state\.story=b\.dataset\.story/);
+ assert.match(app,/data-story/);
+ assert.match(app,/studio-story-template/);
+ assert.match(app,/state\.story=b\.dataset\.story/);
  assert.match(css,/#studio-templates \.studio-story-template img/);
  assert.doesNotMatch(html,/https:\/\/www\.canva\.com/);
- assert.match(html,/story:'01-ivory-magnolia'/);
+ assert.match(app,/story:'01-ivory-magnolia'/);
 });

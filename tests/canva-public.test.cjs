@@ -10,6 +10,7 @@ const context={};
 vm.runInNewContext(fs.readFileSync('assets/canva-public.js','utf8'),context,{timeout:1000});
 const cards=Array.from(context.DAWAT_CANVA_PUBLIC||[]);
 const html=fs.readFileSync('index.html','utf8');
+const app=fs.readFileSync('assets/app.js','utf8');
 const css=fs.readFileSync('assets/canva-public.css','utf8');
 
 test('GitHub Canva DB contains imported public records and matches browser catalog',()=>{
@@ -43,7 +44,7 @@ test('import script reports synced DB and browser files',()=>{
 test('third-party metadata stays archived; public website displays hosted art only',()=>{
  assert.doesNotMatch(html,/assets\/canva-public\.js|function canvaPage\(|www\.canva\.com/);
  assert.doesNotMatch(html,/canva-pro-ui\.js|canva-public\.css|canva-pro\.css/);
- const route=html.slice(html.indexOf('function route(){'),html.indexOf('\nwindow.addEventListener',html.indexOf('function route(){')));
+ const route=app.slice(app.indexOf('function route(){'),app.indexOf('\nwindow.addEventListener',app.indexOf('function route(){')));
  assert.match(route,/storyUI\.page\(app/);
  assert.doesNotMatch(route,/canvaPage\(/);
  assert.match(html,/assets\/story-ui\.js/);

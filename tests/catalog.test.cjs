@@ -9,6 +9,7 @@ const sandbox = {};
 vm.runInNewContext(catalogSource, sandbox, { timeout: 1000 });
 const templates = sandbox.DAWAT_CATALOG;
 const html = fs.readFileSync('index.html', 'utf8');
+const app = fs.readFileSync('assets/app.js', 'utf8');
 const inlineScripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x => x[1]).filter(Boolean);
 
 test('100 real, distinct templates exist', () => {
@@ -28,16 +29,18 @@ test('eight occasion types, twenty palettes and five layouts', () => {
     assert.match(t.fg, /^#[a-fA-F0-9]{6}$/);
   }
 });
-test('HTML inline script parses and refers to real template catalog', () => {
-  assert.equal(inlineScripts.length, 1);
-  assert.doesNotThrow(() => new vm.Script(inlineScripts[0], {filename:'index-inline.js'}));
+test('local application script parses and refers to real template catalog', () => {
+  assert.equal(inlineScripts.length, 0);
+  assert.doesNotThrow(() => new vm.Script(app, {filename:'assets/app.js'}));
   assert.match(html, /assets\/catalog\.js/);
-  assert.match(html, /catalog-category/);
-  assert.match(html, /function templatesPage\(\)/);
+  assert.match(html, /assets\/app\.js/);
+  assert.match(app, /catalog-category/);
+  assert.match(app, /function templatesPage\(\)/);
 });
 test('all live routes and useful modules have UI', () => {
-  for (const word of ['function studio()', 'function pathsPage()', 'function dashboard()', 'function exportPNG(o)', 'function makeICS(o)', 'export-backup','import-backup','data-duplicate','copy-suggest']) assert.ok(html.includes(word), word);
+  for (const word of ['function studio()', 'function pathsPage()', 'function dashboard()', 'function exportPNG(o)', 'function renderQR(target,o)', 'export-backup','import-backup','data-duplicate','copy-suggest']) assert.ok(app.includes(word), word);
 });
 test('independent site has no dependencies on other owned projects', () => {
-  for (const banned of ['sabeq','lovable.app','chatgpt.site','q8-ux.github.io/saad/']) assert.ok(!html.toLowerCase().includes(banned), banned);
+  const live=(html+'\n'+app).toLowerCase();
+  for (const banned of ['sabeq','lovable.app','chatgpt.site','q8-ux.github.io/saad/']) assert.ok(!live.includes(banned), banned);
 });
