@@ -32,9 +32,9 @@ test('gallery, editor and sharing use the same story IDs',()=>{
  assert.match(html,/assets\/stories\.js/);
  assert.match(html,/assets\/story-ui\.js/);
  assert.match(html,/assets\/stories\.css/);
- assert.match(html,/href="#\/stories"/);
- assert.match(html,/function canvaPage\(\)/);
- assert.match(html,/canvaPage\(\)/);
+ assert.match(html,/href="#\/templates"/);
+ assert.doesNotMatch(html,/function canvaPage\(\)/);
+ assert.match(html,/storyUI\.page\(app/);
  assert.match(html,/storyUI\.invite\(item,formatDate\)/);
  assert.match(html,/storyUI\.exportPNG\(o,formatDate,notify\)/);
  assert.match(html,/story:storyUI&&storyUI\.find\(o\.story\)/);
@@ -57,5 +57,14 @@ test('story cards keep correct 9:16 proportions across viewport sizes',()=>{
  assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
  assert.match(css,/\.preview-area \.invite-card\.story-invitation/);
  assert.match(css,/max-height:94%/);
- assert.match(html,/assets\/stories\.css\?v=2/);
+ assert.match(html,/assets\/stories\.css\?v=3/);
+});
+
+test('studio uses hosted story artwork rather than redirected catalog links',()=>{
+ assert.match(html,/data-story/);
+ assert.match(html,/studio-story-template/);
+ assert.match(html,/state\.story=b\.dataset\.story/);
+ assert.match(css,/#studio-templates \.studio-story-template img/);
+ assert.doesNotMatch(html,/https:\/\/www\.canva\.com/);
+ assert.match(html,/story:'01-ivory-magnolia'/);
 });
