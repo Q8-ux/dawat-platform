@@ -4,13 +4,15 @@ const escape = value => String(value==null?"":value).replace(/[&<>"']/g,c=>({"&"
 const all = () => root.DAWAT_STORIES || [];
 const find = id => all().find(x=>x.id===id) || null;
 function page(app,onSelect) {
- app.innerHTML='<div class="container"><section class="stories-intro"><div><div class="eyebrow">STORY INVITATIONS · 9:16</div><h1>ستوريات الأفراح والمناسبات</h1><p>عشرون خلفية جديدة فارغة من الكتابة بمقاس ستوري 1080 × 1920. اختر التصميم، واكتب أسماء المناسبة وموعدها، ثم شارك الدعوة.</p><div class="actions"><a class="btn btn-gold" href="#/studio">إنشاء دعوة</a><a class="btn btn-white" href="#/templates">مكتبة 100 قالب</a></div></div><div class="story-hero-preview"><img loading="lazy" src="assets/story-art/02-botanical-garden.svg" alt="زخرفة نباتية"><img loading="lazy" src="assets/story-art/03-black-and-gold.svg" alt="زخرفة ذهبية"><img loading="lazy" src="assets/story-art/07-blush-cherry-blossom.svg" alt="زخرفة وردية"></div></section><div id="story-categories" class="story-filter" aria-label="تصنيف المناسبة"></div><p id="story-count" class="catalog-count"></p><div class="stories-grid" id="story-gallery"></div><p class="story-notice">هذه خلفيات SVG أصلية قابلة للاستخدام في المحرر والتصدير، وليست ملفات PNG الأصلية المعروضة في المحادثة. ملفات PNG محفوظة في حزمة التنزيل المنفصلة.</p></div>';
- const kinds=['الكل',...new Set(all().map(x=>x.kind))];let current='الكل';
+ app.innerHTML='<div class="container"><section class="stories-intro"><div><div class="eyebrow">STORY INVITATIONS · 9:16</div><h1>بطاقات الأفراح والمناسبات</h1><p>20 بطاقة مصوّرة موجودة داخل الموقع بمقاس 1080 × 1920. شاهد تصميم كل بطاقة هنا، اختره، وأدخل الاسم والتاريخ ثم حمّل النتيجة.</p><div class="actions"><a class="btn btn-gold" href="#/studio">إنشاء دعوة</a><a class="btn btn-white" href="#/dashboard">دعواتي المحفوظة</a></div></div><div class="story-hero-preview"><img loading="lazy" src="assets/story-art/02-botanical-garden.svg" alt="زخرفة نباتية"><img loading="lazy" src="assets/story-art/03-black-and-gold.svg" alt="زخرفة ذهبية"><img loading="lazy" src="assets/story-art/07-blush-cherry-blossom.svg" alt="زخرفة وردية"></div></section><div id="story-categories" class="story-filter" aria-label="تصنيف المناسبة"></div><p id="story-count" class="catalog-count"></p><div class="stories-grid" id="story-gallery"></div><p class="story-notice">البطاقات المعروضة هي الملفات المصوّرة المحفوظة فعلياً في مكتبة الموقع، ويمكن تخصيصها وتصديرها دون الانتقال إلى أي موقع آخر. وهي رسومات SVG أصلية، وليست ملفات قوالب Pro التابعة لطرف ثالث.</p></div>';
+ const priority={'زفاف':0,'عقد قران':1,'خطوبة':2,'مولود':3,'تخرج':4,'عيد ميلاد':5,'تهنئة':6};
+ const ordered=all().slice().sort((a,b)=>(priority[a.kind]??9)-(priority[b.kind]??9));
+ const kinds=['الكل',...new Set(ordered.map(x=>x.kind))];let current='الكل';
  const cat=app.querySelector('#story-categories'),grid=app.querySelector('#story-gallery'),count=app.querySelector('#story-count');
  function paint(){
   cat.innerHTML=kinds.map(k=>'<button type="button" data-kind="'+escape(k)+'" aria-pressed="'+String(k===current)+'">'+escape(k)+'</button>').join('');
-  const visible=all().filter(x=>current==='الكل'||x.kind===current);
-  count.textContent='عرض '+visible.length+' من 20 ستوري';
+  const visible=ordered.filter(x=>current==='الكل'||x.kind===current);
+  count.textContent='عرض '+visible.length+' من '+ordered.length+' بطاقة · الصور داخل الموقع';
   grid.innerHTML=visible.map(x=>'<button type="button" class="story-tile" data-story="'+x.id+'"><img src="'+x.src+'" alt="'+escape(x.name)+'، خلفية خالية من النص" width="1080" height="1920" loading="lazy"><strong>'+escape(x.name)+'</strong><small>'+escape(x.kind)+' · 9:16</small><span class="choose-label">استخدم التصميم</span></button>').join('');
   cat.querySelectorAll('button').forEach(b=>b.onclick=()=>{current=b.dataset.kind;paint()});
   grid.querySelectorAll('button').forEach(b=>b.onclick=()=>onSelect(b.dataset.story));
