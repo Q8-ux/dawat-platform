@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "collection": "DAWAT_USER_IMPORTED_ASSETS",
+  "source": "User-supplied files from this conversation",
+  "importedAt": "2026-10-27",
+  "copyrightNote": "These files were supplied by the user; usage and redistribution depend on their rights in the underlying designs.",
+  "publicationStatus": "extracted-locally-not-yet-on-github-pages",
+  "reason": "The uploaded PDF and MP4 binary media, and derived raster/SVG files, have not been transferred into GitHub repository assets.",
+  "formats": [
+    "pdf",
+    "pdf",
+    "mp4"
+  ],
+  "records": [
+    {
+      "id": "gulf-red-floral",
+      "title": "دعوة زفاف - أبيض وأحمر مع زخارف وزهور",
+      "sha256": "2c15177f3028b246fce083acc03d3d2f8eba47c17ccabc58f0185cfdcd02735d",
+      "bytes": 3027073,
+      "pages": 1,
+      "sourceType": "pdf",
+      "textSpansExtracted": 11,
+      "embeddedRasterObjects": 6,
+      "vectorDrawingPaths": 197,
+      "sourcePagePoints": [
+        297.75,
+        419.25
+      ],
+      "extractionStatus": "complete-local",
+      "websiteMedia": false
+    },
+    {
+      "id": "gulf-ivory-wax",
+      "title": "دعوة زفاف - رخام عاجي وختم شمع",
+      "sha256": "4c6c0c7a9bbf96f4f519a1b81839615e56d9e659aa3732da5cb7b03506d1c457",
+      "bytes": 2765016,
+      "pages": 1,
+      "sourceType": "pdf",
+      "textSpansExtracted": 11,
+      "embeddedRasterObjects": 3,
+      "vectorDrawingPaths": 30,
+      "sourcePagePoints": [
+        297.75,
+        419.25
+      ],
+      "extractionStatus": "complete-local",
+      "websiteMedia": false
+    },
+    {
+      "id": "gulf-pink-motion",
+      "title": "دعوة زفاف - قصة متحركة باللون الوردي",
+      "sha256": "072a28266bd242c2dffbe66e3565a13c2cba93a1b9d21511c5db851c28ce63b3",
+      "bytes": 1904085,
+      "sourceType": "mp4",
+      "durationSeconds": 9,
+      "width": 1080,
+      "height": 1920,
+      "sampledFrames": 7,
+      "editableSourceLayers": false,
+      "extractionStatus": "complete-local",
+      "websiteMedia": false
+    }
+  ]
+}
