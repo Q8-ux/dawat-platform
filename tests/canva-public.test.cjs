@@ -40,17 +40,15 @@ test('import script reports synced DB and browser files',()=>{
  const result=spawnSync(process.execPath,['scripts/import-canva.mjs','--check'],{encoding:'utf8'});
  assert.equal(result.status,0,result.stderr+result.stdout);
 });
-test('Canva-only homepage uses official Canva catalog',()=>{
- assert.match(html,/function canvaPage\(\)/);
- assert.match(html,/assets\/canva-public\.js/);
- assert.match(html,/assets\/canva-public\.css/);
+test('third-party metadata stays archived; public website displays hosted art only',()=>{
+ assert.doesNotMatch(html,/assets\/canva-public\.js|function canvaPage\(|www\.canva\.com/);
+ assert.doesNotMatch(html,/canva-pro-ui\.js|canva-public\.css|canva-pro\.css/);
  const route=html.slice(html.indexOf('function route(){'),html.indexOf('\nwindow.addEventListener',html.indexOf('function route(){')));
- assert.match(route,/canvaPage\(\)/);
- assert.doesNotMatch(route,/\btemplatesPage\(/);
- assert.doesNotMatch(route,/\bstoryUI\.page\(/);
- assert.doesNotMatch(route,/\bshowHome\(/);
- assert.match(css,/\.canva-item/);
+ assert.match(route,/storyUI\.page\(app/);
+ assert.doesNotMatch(route,/canvaPage\(/);
+ assert.match(html,/assets\/story-ui\.js/);
 });
+
 test('Canva DB does not republish public third-party template media',()=>{
  const publicItems=db.records.filter(x=>x.sourceType==='public-reference');
  assert.ok(publicItems.length>=20);
