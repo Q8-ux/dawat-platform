@@ -48,10 +48,29 @@ jobs:
           node --check assets/canva-pro-collections.js
           node --check assets/canva-verified.js
           node --test tests/*.test.cjs
+      - name: Stage only live DAWAT public assets
+        run: |
+          mkdir -p dist/assets
+          cp index.html dist/index.html
+          cp assets/catalog.js assets/stories.js assets/story-ui.js assets/stories.css assets/neon-3d.css dist/assets/
+          cp -R assets/story-art dist/assets/story-art
+          python3 - <<'PY'
+          from pathlib import Path
+          d=Path("dist")
+          html=(d/"index.html").read_text(encoding="utf-8")
+          assert "assets/story-ui.js" in html and "assets/stories.js" in html
+          assert "storyUI.page(app" in html
+          assert "canva" not in html.lower().replace("canvas","")
+          assert "www.canva.com" not in html
+          images=list((d/"assets/story-art").glob("*.svg"))
+          assert len(images)==20, len(images)
+          assert not any("canva" in str(p).lower() for p in d.rglob("*"))
+          print("DAWAT public-only artifact:",len(images),"live invitation images")
+          PY
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
       - name: Publish
         id: deployment
         uses: actions/deploy-pages@v4
