@@ -41,3 +41,7 @@
 - الكود: https://github.com/Q8-ux/dawat-platform
 - الموقع بعد نجاح النشر: https://q8-ux.github.io/dawat-platform/
 - اختبارات التحديث: https://github.com/Q8-ux/dawat-platform/actions
+
+## مسار الموشن جرافيك والشرح المتحرك بالكود
+
+تم تطبيقه على المعاينة وقوالب المناسبات ودعوة الويب، مع تصدير فيديو محلي وحفظ الحركة داخل الدعوة وروابط المشاركة. انظر [MOTION_PATH.md](MOTION_PATH.md).

@@ -1,0 +1,52 @@
+/* Motion remains an optional layer on the original DAWAT artwork. */
+.motion-controls{width:100%;margin-top:5px;padding:21px;border:1px solid #65dad64d;border-radius:18px;background:linear-gradient(145deg,#192542,#101b34);color:#e6f6ff;text-align:right}
+.motion-controls-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.motion-kicker{font:600 11px Cairo;color:#7be9d9}
+.motion-controls h3{font:700 27px/1.5 Amiri;margin:3px 0 0;color:#fff4dd}
+.motion-format{font:600 12px Cairo;border:1px solid #b3c3dc55;border-radius:9px;padding:7px;color:#c7d5e8;direction:ltr}
+.motion-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.motion-choices button{font-family:Cairo;background:#101b30;color:#dce6f3;border:1px solid #7894bd44;border-radius:12px;padding:12px 7px;display:grid;justify-items:center;gap:4px;min-width:0;transition:background .2s,border-color .2s}
+.motion-choices button:hover{border-color:#7ed5cb}
+.motion-choices button[aria-pressed="true"]{background:linear-gradient(145deg,#23494b,#1c304d);border-color:#8aecdd;box-shadow:inset 0 0 0 1px #8aecdd55}
+.motion-choice-icon{font:26px/1.3 Amiri;color:#e7c88d}
+.motion-icon-breeze{color:#9dddc2}.motion-icon-cinema{color:#b2b5ff}
+.motion-choices strong{font-size:12px}.motion-choices small{font-size:10px;line-height:1.8;color:#b1c2d6}
+.motion-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:16px}
+.motion-toolbar label{display:flex;align-items:center;gap:9px;font:600 12px Cairo}
+.motion-toolbar select{font:12px Cairo;color:#e5f5ff;background:#0e1b33;border:1px solid #6c91b366;padding:8px 10px;border-radius:8px;min-height:42px}
+.motion-toolbar>div{display:flex;gap:7px;flex-wrap:wrap}
+.motion-toolbar button{font-size:11px;min-height:40px;padding:7px 11px}
+.motion-toolbar button:disabled{opacity:.4;cursor:default;transform:none}
+.motion-export-row{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-top:19px;padding-top:16px;border-top:1px solid #9bafd32b;flex-wrap:wrap}
+.motion-export-row .btn{font-size:12px;min-height:45px}
+.motion-export-row p{font:11px/1.9 Cairo;color:#c7d7e8;margin:0}
+.motion-export-row p span{color:#96aec8;font-size:10px}
+.motion-playback-note{color:#9bb5cd;font:11px/1.8 Cairo;margin:13px 0 0;min-height:1.8em}
+.motion-card{position:relative;isolation:isolate}
+.motion-card[data-motion="cinema"]{box-shadow:0 18px 45px #0005,0 0 0 1px #e4c88766}
+.motion-particles{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;border-radius:inherit;color:#c49d58;contain:paint}
+.motion-particles i{position:absolute;font:20px/1 Amiri;font-style:normal;opacity:0;text-shadow:0 0 10px #e3c78c66}
+.motion-card[data-tone="light"] .motion-particles{color:#ffe6aa}
+.motion-card[data-motion="breeze"] .motion-particles{color:#729c76}
+.motion-card .story-content,.motion-card .web-hero-copy{z-index:3}
+.motion-showcase{margin:26px 0;padding:26px 30px;border:1px solid #bda16b66;border-radius:24px;display:grid;grid-template-columns:1fr 1.3fr;gap:32px;align-items:center;overflow:hidden;background:radial-gradient(ellipse at 16% 10%,#85703a21,transparent 60%),linear-gradient(130deg,#102d37,#121c35)}
+.motion-showcase-art{display:flex;justify-content:center;perspective:800px}
+.motion-demo-card{width:175px!important;max-width:100%;aspect-ratio:9/16;min-height:0!important;padding:20px!important;border-radius:80px 80px 10px 10px!important;border:1px solid #d9c394!important;box-shadow:14px 18px 0 #040e2066,0 18px 35px #0004;background:#0f192b url('story-art/03-black-and-gold.svg') center/cover!important;color:#f1ddb6!important;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:13px}
+.motion-demo-card:before,.motion-demo-card:after{content:none!important}
+.motion-demo-card .over{font:15px Amiri;color:#eedcc0;margin:0}.motion-demo-card h2{font:700 28px/1.8 Amiri!important;color:#fff0d3!important;margin:0!important}.motion-demo-card .motion-demo-line{height:1px;width:42px;background:#bda16b}.motion-demo-card small{font:12px Amiri;color:#eedcc0}
+.motion-showcase-copy h2{font:700 clamp(29px,3.3vw,40px)/1.5 Amiri;margin:4px 0;color:#fff4dd}
+.motion-showcase-copy p{font:13px/2 Cairo;color:#c1cfdf;max-width:520px;margin:8px 0 16px}
+.motion-showcase-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.motion-showcase-tags span{font:11px Cairo;color:#e6cfa6;border:1px solid #bda16b55;border-radius:30px;padding:5px 12px}
+.motion-showcase .actions{gap:10px}.motion-showcase .btn{font-size:12px}
+dialog.motion-export-dialog{direction:rtl;text-align:center;font-family:Cairo;color:#edf7ff;background:#12213a;border:1px solid #75dace77;border-radius:22px;width:min(90vw,430px);padding:32px;box-shadow:0 24px 80px #0009}
+dialog.motion-export-dialog::backdrop{background:#030c1bd6;backdrop-filter:blur(5px)}
+.motion-export-mark{font:45px/1 Amiri;color:#ddc494;display:block}
+.motion-export-dialog h2{font:700 29px Amiri;margin:14px 0}.motion-export-dialog p{font-size:12px;line-height:2;color:#b8c9dd}
+.motion-export-dialog progress{display:block;width:100%;height:10px;margin:22px auto 12px;accent-color:#78ecdb;direction:ltr}
+.motion-export-dialog output{display:block;min-height:2em;font-size:12px;color:#a8e6da;margin-bottom:19px}
+.motion-render-preview{display:block;width:90px;height:160px;border:1px solid #bda16b66;border-radius:6px;margin:12px auto;object-fit:contain}
+.motion-guest-tools{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:14px auto}.motion-guest-tools .btn{font-size:12px}
+@media(max-width:750px){.motion-controls{padding:16px}.motion-showcase{grid-template-columns:1fr;padding:24px 18px;gap:25px}.motion-showcase-art{order:2}.motion-showcase-copy{order:1}.motion-demo-card{width:155px!important}.motion-showcase-copy h2{font-size:32px}.motion-controls h3{font-size:26px}.motion-toolbar{align-items:flex-start}.motion-export-row{gap:16px}.motion-export-row .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.motion-particles{display:none}.motion-choices button{transition:none}}
+@media print{.motion-controls,.motion-guest-tools,.motion-particles,.motion-showcase{display:none!important}.motion-card{box-shadow:none!important}.motion-card *{opacity:1!important;transform:none!important;animation:none!important}}

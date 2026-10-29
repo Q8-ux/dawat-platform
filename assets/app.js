@@ -4,6 +4,9 @@ var catalog=window.DAWAT_CATALOG||[];
 var storyUI=window.DAWAT_STORY_UI;
 var webUI=window.DAWAT_WEB_INVITATION;
 var inviteUtils=window.DAWAT_INVITATION_UTILS;
+var motionUI=window.DAWAT_MOTION;
+var motionPlayer=null;
+function motionSettings(o){return motionUI?motionUI.normalize(o):{motion:'none',duration:12}}
 var catalogById=Object.fromEntries(catalog.map(function(x){return [x.id,x]}));
 var themes=catalog.map(function(x){return [x.id,x.label]});
 function preset(id){return catalogById[id]||catalog[0]}
@@ -12,7 +15,7 @@ function choose(id){var t=preset(id);state.story='';state.theme=t.id;state.kind=
 if(location.hash==='#/studio')studio();else location.hash='#/studio'}
 
 var kinds=['زفاف','عقد قران','خطوبة','تخرج','مولود','استقبال','عيد ميلاد','مناسبة خاصة'];
-var key='dawat-studio-v1';var editing=null;var state={presentation:'card',kind:'زفاف',title:'دعوة خاصة',names:'',host:'',message:'',date:'',time:'',venue:'',maps:'',whatsapp:'',whatsapp2:'',whatsapp3:'',whatsapp4:'',closing:'',theme:'night',story:'01-ivory-magnolia'};
+var key='dawat-studio-v1';var editing=null;var state={presentation:'card',kind:'زفاف',title:'دعوة خاصة',names:'',host:'',message:'',date:'',time:'',venue:'',maps:'',whatsapp:'',whatsapp2:'',whatsapp3:'',whatsapp4:'',closing:'',theme:'night',story:'01-ivory-magnolia',motion:'breeze',duration:12};
 var app=document.querySelector('#app');var toast=document.querySelector('#toast');
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function attr(s){return esc(s)}
@@ -23,7 +26,7 @@ function contactValue(value){return inviteUtils?inviteUtils.contactDigits(value)
 function whatsapp(num){return inviteUtils?inviteUtils.whatsappURL(num):''}
 function sanitizeInvitation(o,id){
  o=o&&typeof o==='object'?o:{};
- return {id:String(id||o.id||unique()).slice(0,80),presentation:o.presentation==='web'?'web':'card',kind:String(o.kind||'مناسبة خاصة').slice(0,75),title:String(o.title||'').slice(0,200),names:String(o.names||'').slice(0,200),host:String(o.host||'').slice(0,250),message:String(o.message||'').slice(0,3000),date:String(o.date||'').slice(0,20),time:String(o.time||'').slice(0,10),venue:String(o.venue||'').slice(0,250),maps:safeURL(o.maps||''),whatsapp:contactValue(o.whatsapp),whatsapp2:contactValue(o.whatsapp2),whatsapp3:contactValue(o.whatsapp3),whatsapp4:contactValue(o.whatsapp4),closing:String(o.closing||'').slice(0,250),theme:catalogById[o.theme]?o.theme:(catalog[0]?catalog[0].id:'night'),story:storyUI&&storyUI.find(o.story)?o.story:'',updated:String(o.updated||new Date().toISOString()).slice(0,40)};
+ return {id:String(id||o.id||unique()).slice(0,80),motion:motionSettings(o).motion,duration:motionSettings(o).duration,presentation:o.presentation==='web'?'web':'card',kind:String(o.kind||'مناسبة خاصة').slice(0,75),title:String(o.title||'').slice(0,200),names:String(o.names||'').slice(0,200),host:String(o.host||'').slice(0,250),message:String(o.message||'').slice(0,3000),date:String(o.date||'').slice(0,20),time:String(o.time||'').slice(0,10),venue:String(o.venue||'').slice(0,250),maps:safeURL(o.maps||''),whatsapp:contactValue(o.whatsapp),whatsapp2:contactValue(o.whatsapp2),whatsapp3:contactValue(o.whatsapp3),whatsapp4:contactValue(o.whatsapp4),closing:String(o.closing||'').slice(0,250),theme:catalogById[o.theme]?o.theme:(catalog[0]?catalog[0].id:'night'),story:storyUI&&storyUI.find(o.story)?o.story:'',updated:String(o.updated||new Date().toISOString()).slice(0,40)};
 }
 function read(){try{var v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v.filter(function(x){return x&&typeof x==='object'}).slice(0,250).map(function(x){return sanitizeInvitation(x,x.id)}):[]}catch(e){return []}}
 function write(v){try{var clean=(Array.isArray(v)?v:[]).slice(0,250).map(function(x){return sanitizeInvitation(x,x.id)});localStorage.setItem(key,JSON.stringify(clean));return true}catch(e){notify('تعذر الحفظ في هذا المتصفح');return false}}
@@ -51,23 +54,56 @@ document.getElementById('catalog-more').onclick=function(){limit+=24;render()};r
 }
 
 function input(name,label,type,options){var val=state[name]||'';if(type==='select')return '<div class="field"><label for="'+name+'">'+label+'</label><select id="'+name+'" data-field="'+name+'">'+options.map(function(option){var value=typeof option==='object'?option.value:option;var text=typeof option==='object'?option.label:option;return '<option value="'+attr(value)+'" '+(val===value?'selected':'')+'>'+esc(text)+'</option>'}).join('')+'</select></div>';if(type==='textarea')return '<div class="field"><label for="'+name+'">'+label+'</label><textarea id="'+name+'" data-field="'+name+'">'+esc(val)+'</textarea></div>';return '<div class="field"><label for="'+name+'">'+label+'</label><input id="'+name+'" type="'+type+'" data-field="'+name+'" value="'+attr(val)+'"></div>'}
-function studio(){app.innerHTML='<div class="container"><div class="eyebrow">STUDIO · DAWAT</div><h1 style="font:700 37px Amiri;margin:5px 0">استوديو الدعوات</h1><p class="subtitle">عدّل تفاصيل مناسبتك، والمعاينة تتغير فوراً. تحفظ المسودات داخل المتصفح الحالي فقط.</p><div class="workspace"><section class="panel"><h3>تفاصيل المناسبة</h3><div class="fields">'+input('presentation','شكل الدعوة','select',[{value:'card',label:'بطاقة رقمية 9:16'},{value:'web',label:'دعوة ويب تفاعلية'}])+input('kind','نوع المناسبة','select',kinds)+input('title','اسم الدعوة','text')+input('names','اسم العروسين / صاحب المناسبة','text')+input('host','نص الجهة الداعية','text')+input('message','كلمات الدعوة','textarea')+'<div class="two">'+input('date','تاريخ المناسبة','date')+input('time','الوقت (اختياري)','time')+'</div>'+input('venue','المكان','text')+input('maps','رابط موقع Google / Apple Maps','url')+input('whatsapp','رقم التواصل الأول / واتساب','tel')+'<div id="web-fields" class="'+(state.presentation==='web'?'':'hidden')+'">'+input('whatsapp2','رقم التواصل الثاني (اختياري)','tel')+input('whatsapp3','رقم التواصل الثالث (اختياري)','tel')+input('whatsapp4','رقم التواصل الرابع (اختياري)','tel')+input('closing','عبارة ختام الدعوة','text')+'<p class="tiny">يمكن إدخال الرقم الكويتي من 8 أرقام أو كتابة الرقم مع رمز الدولة.</p></div></div><div class="actions"><button class="btn btn-dark" id="save" type="button">حفظ الدعوة</button><button class="btn btn-white" id="new" type="button">مسح الحقول</button></div></section><section class="preview-area"><div class="preview-top"><b>معاينة دعوتك</b><span class="note">التصميم يتغير مباشرة</span></div><div id="live-card">'+invite(state)+'</div><div class="studio-tools"><button class="btn btn-dark btn-sm" id="png">تنزيل PNG</button><button class="btn btn-white btn-sm" id="print">حفظ PDF</button><button class="btn btn-white btn-sm" id="share">رابط مشاركة</button></div><span class="tiny">الصور الناتجة للاستخدام الشخصي. روابط المشاركة عامة لمن يحصل عليها.</span></section><section class="panel third"><h3>مظهر البطاقة</h3><div class="actions"><a href="#/templates" class="btn btn-white btn-sm">خلفيات ستوري 9:16</a></div><div class="templates" id="studio-templates" style="grid-template-columns:repeat(2,1fr);gap:9px"></div><div class="actions"><a class="btn btn-white btn-sm" href="#/templates">عرض بطاقات المناسبات</a></div><h4 style="margin:18px 0 6px">مسار صياغة النصوص</h4><p class="tiny">صياغات محلية جاهزة؛ لا تتصل بخدمة ذكاء اصطناعي خارجية.</p><button type="button" class="btn btn-white" id="copy-suggest">اقترح نص الدعوة</button><div class="notice" style="margin-top:15px">تُحفظ الدعوات في جهازك. لا تضع معلومات حساسة في روابط المشاركة.</div></section></div></div>';
-document.querySelectorAll('[data-field]').forEach(function(el){el.addEventListener('input',function(){state[el.dataset.field]=el.value;if(el.dataset.field==='presentation'){studio();return}document.querySelector('#live-card').innerHTML=invite(state)})});
+function refreshPreview(){
+ var target=app.querySelector('#live-card');if(!target)return;
+ if(motionUI)motionUI.destroy();target.innerHTML=invite(state);
+ motionPlayer=motionUI?motionUI.mount(target,state):null;
+ app.querySelectorAll('[data-motion-choice]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.motionChoice===motionSettings(state).motion))});
+ var pause=app.querySelector('[data-motion-pause]'),replay=app.querySelector('[data-motion-replay]'),note=app.querySelector('[data-motion-status]');
+ if(pause){pause.disabled=!motionPlayer||!motionPlayer.enabled||motionPlayer.reduced;pause.textContent='إيقاف الحركة';pause.setAttribute('aria-pressed','false')}
+ if(replay)replay.disabled=!motionPlayer||!motionPlayer.enabled||motionPlayer.reduced;
+ if(note)note.textContent=motionPlayer&&motionPlayer.reduced?'تقليل الحركة مفعّل في جهازك؛ تظهر الدعوة ثابتة، ويمكنك تنزيل الفيديو عند رغبتك.':motionSettings(state).motion==='none'?'جميع التفاصيل ظاهرة؛ اختر أسلوبًا لإضافة الحركة.':'اختيار الحركة والمدة يُحفظ مع الدعوة ورابط مشاركتها.';
+}
+function setupMotionControls(){
+ if(!motionUI)return;
+ app.querySelectorAll('[data-motion-choice]').forEach(function(button){button.onclick=function(){state.motion=button.dataset.motionChoice;refreshPreview()}});
+ var duration=app.querySelector('#motion-duration');if(duration)duration.onchange=function(){state.duration=motionSettings({duration:duration.value}).duration;refreshPreview()};
+ var replay=app.querySelector('[data-motion-replay]');if(replay)replay.onclick=function(){refreshPreview()};
+ var pause=app.querySelector('[data-motion-pause]');if(pause)pause.onclick=function(){if(!motionPlayer)return;if(motionPlayer.paused){motionPlayer.play();pause.textContent='إيقاف الحركة';pause.setAttribute('aria-pressed','false')}else{motionPlayer.pause();pause.textContent='استئناف الحركة';pause.setAttribute('aria-pressed','true')}};
+ var video=app.querySelector('[data-motion-export]');if(video)video.onclick=function(){motionUI.download(sanitizeInvitation(state),formatDate,notify)};
+ var format=motionUI.videoFormat(),hint=app.querySelector('[data-motion-format]');
+ if(hint)hint.textContent=format?'سيُنزّل بصيغة '+format.extension.toUpperCase():'افتح في متصفح حديث يدعم تنزيل الفيديو';
+ refreshPreview();
+}
+function setupGuestMotion(item,fromPrint){
+ if(!motionUI)return;
+ if(fromPrint){motionUI.destroy();return}
+ motionPlayer=motionUI.mount(app,item);
+ var holder=app.querySelector('.web-guest-container, .guest-view');if(!holder)return;
+ var tools=document.createElement('div');tools.className='motion-guest-tools';
+ tools.innerHTML=(motionPlayer&&motionPlayer.enabled&&!motionPlayer.reduced?'<button class="btn btn-white" type="button" data-motion-guest-replay>إعادة عرض الحركة</button>':'')+'<button class="btn btn-white" type="button" data-motion-guest-export>تنزيل فيديو</button>';
+ holder.appendChild(tools);
+ var replay=tools.querySelector('[data-motion-guest-replay]');if(replay)replay.onclick=function(){if(motionPlayer)motionPlayer.replay()};
+ tools.querySelector('[data-motion-guest-export]').onclick=function(){motionUI.download(sanitizeInvitation(item),formatDate,notify)};
+}
+function studio(){app.innerHTML='<div class="container"><div class="eyebrow">STUDIO · DAWAT</div><h1 style="font:700 37px Amiri;margin:5px 0">استوديو الدعوات</h1><p class="subtitle">عدّل تفاصيل مناسبتك، والمعاينة تتغير فوراً. تحفظ المسودات داخل المتصفح الحالي فقط.</p><div class="workspace"><section class="panel"><h3>تفاصيل المناسبة</h3><div class="fields">'+input('presentation','شكل الدعوة','select',[{value:'card',label:'بطاقة رقمية 9:16'},{value:'web',label:'دعوة ويب تفاعلية'}])+input('kind','نوع المناسبة','select',kinds)+input('title','اسم الدعوة','text')+input('names','اسم العروسين / صاحب المناسبة','text')+input('host','نص الجهة الداعية','text')+input('message','كلمات الدعوة','textarea')+'<div class="two">'+input('date','تاريخ المناسبة','date')+input('time','الوقت (اختياري)','time')+'</div>'+input('venue','المكان','text')+input('maps','رابط موقع Google / Apple Maps','url')+input('whatsapp','رقم التواصل الأول / واتساب','tel')+'<div id="web-fields" class="'+(state.presentation==='web'?'':'hidden')+'">'+input('whatsapp2','رقم التواصل الثاني (اختياري)','tel')+input('whatsapp3','رقم التواصل الثالث (اختياري)','tel')+input('whatsapp4','رقم التواصل الرابع (اختياري)','tel')+input('closing','عبارة ختام الدعوة','text')+'<p class="tiny">يمكن إدخال الرقم الكويتي من 8 أرقام أو كتابة الرقم مع رمز الدولة.</p></div></div><div class="actions"><button class="btn btn-dark" id="save" type="button">حفظ الدعوة</button><button class="btn btn-white" id="new" type="button">مسح الحقول</button></div></section><section class="preview-area"><div class="preview-top"><b>معاينة دعوتك</b><span class="note">التصميم يتغير مباشرة</span></div><div id="live-card">'+invite(state)+'</div>'+(motionUI?motionUI.controls(state):'')+'<div class="studio-tools"><button class="btn btn-dark btn-sm" id="png">تنزيل PNG</button><button class="btn btn-white btn-sm" id="print">حفظ PDF</button><button class="btn btn-white btn-sm" id="share">رابط مشاركة</button></div><span class="tiny">الصور الناتجة للاستخدام الشخصي. روابط المشاركة عامة لمن يحصل عليها.</span></section><section class="panel third"><h3>مظهر البطاقة</h3><div class="actions"><a href="#/templates" class="btn btn-white btn-sm">خلفيات ستوري 9:16</a></div><div class="templates" id="studio-templates" style="grid-template-columns:repeat(2,1fr);gap:9px"></div><div class="actions"><a class="btn btn-white btn-sm" href="#/templates">عرض بطاقات المناسبات</a></div><h4 style="margin:18px 0 6px">مسار صياغة النصوص</h4><p class="tiny">صياغات محلية جاهزة؛ لا تتصل بخدمة ذكاء اصطناعي خارجية.</p><button type="button" class="btn btn-white" id="copy-suggest">اقترح نص الدعوة</button><div class="notice" style="margin-top:15px">تُحفظ الدعوات في جهازك. لا تضع معلومات حساسة في روابط المشاركة.</div></section></div></div>';
+document.querySelectorAll('[data-field]').forEach(function(el){el.addEventListener('input',function(){state[el.dataset.field]=el.value;if(el.dataset.field==='presentation'){studio();return}refreshPreview()})});
 
 var target=document.querySelector('#studio-templates');
 var choices=(window.DAWAT_STORIES||[]).slice().sort(function(a,b){var rank={'زفاف':0,'عقد قران':1,'خطوبة':2,'مولود':3,'تخرج':4,'عيد ميلاد':5,'تهنئة':6};return (rank[a.kind]??9)-(rank[b.kind]??9)});
 target.innerHTML=choices.map(function(t){return '<button type="button" class="template studio-story-template '+(state.story===t.id?'selected':'')+'" data-story="'+attr(t.id)+'" aria-label="اختيار بطاقة '+attr(t.name)+'"><img src="'+attr(t.src)+'" alt="" width="1080" height="1920" loading="lazy"><label>'+esc(t.name)+'</label></button>'}).join('');
-target.querySelectorAll('[data-story]').forEach(function(b){b.onclick=function(){state.story=b.dataset.story;target.querySelectorAll('[data-story]').forEach(function(el){el.classList.toggle('selected',el===b)});document.querySelector('#live-card').innerHTML=invite(state)}});
+target.querySelectorAll('[data-story]').forEach(function(b){b.onclick=function(){state.story=b.dataset.story;target.querySelectorAll('[data-story]').forEach(function(el){el.classList.toggle('selected',el===b)});refreshPreview()}});
 document.getElementById('copy-suggest').onclick=function(){
 var samples=[(window.DAWAT_COPY[state.kind]||window.DAWAT_COPY['مناسبة خاصة'])[2],'بكل الحب والفرح ندعوكم لتشاركونا أجمل الأوقات، فحضوركم يزيد مناسبتنا بهجة.','يشرفنا حضوركم ومشاركتكم يومنا السعيد، فوجودكم يعني لنا الكثير.','يسعدنا أن نجتمع بكم في هذه المناسبة الغالية على قلوبنا.'];
-var index=samples.indexOf(state.message);state.message=samples[(index+1)%samples.length];document.getElementById('message').value=state.message;document.getElementById('live-card').innerHTML=invite(state);notify('تم اقتراح صياغة قابلة للتعديل');
+var index=samples.indexOf(state.message);state.message=samples[(index+1)%samples.length];document.getElementById('message').value=state.message;refreshPreview();notify('تم اقتراح صياغة قابلة للتعديل');
 };
 
 document.querySelector('#save').onclick=save;
-document.querySelector('#new').onclick=function(){if(confirm('هل تريد إنشاء دعوة جديدة؟')){editing=null;state={presentation:'card',kind:'زفاف',title:'دعوة خاصة',names:'',host:'',message:'',date:'',time:'',venue:'',maps:'',whatsapp:'',whatsapp2:'',whatsapp3:'',whatsapp4:'',closing:'',theme:'night',story:'01-ivory-magnolia'};studio()}};
+document.querySelector('#new').onclick=function(){if(confirm('هل تريد إنشاء دعوة جديدة؟')){editing=null;state={presentation:'card',kind:'زفاف',title:'دعوة خاصة',names:'',host:'',message:'',date:'',time:'',venue:'',maps:'',whatsapp:'',whatsapp2:'',whatsapp3:'',whatsapp4:'',closing:'',theme:'night',story:'01-ivory-magnolia',motion:'breeze',duration:12};studio()}};
 document.querySelector('#png').onclick=function(){exportPNG(state)};
 document.querySelector('#print').onclick=function(){showGuest(state,true);setTimeout(function(){window.print()},300)};
 document.querySelector('#share').onclick=function(){share(state)};
+setupMotionControls();
 }
 function save(){if(!String(state.names||'').trim()){notify('أدخل اسم صاحب المناسبة');return}var all=read();var item=sanitizeInvitation(Object.assign({},state,{updated:new Date().toISOString()}),editing||unique());var ix=all.findIndex(function(x){return x.id===item.id});if(ix>=0)all[ix]=item;else all.unshift(item);if(write(all)){editing=item.id;state=Object.assign({},item);notify('تم حفظ الدعوة في هذا المتصفح ✓')}}
 function dashboard(){var all=read();app.innerHTML='<div class="container"><div class="eyebrow">MY INVITATIONS</div><h1 style="font:700 40px Amiri;margin:5px 0">دعواتي</h1><p class="subtitle">دعوات محفوظة محلياً على هذا الجهاز. لا تنتقل تلقائياً إلى جهاز آخر.</p><div class="actions"><a class="btn btn-gold" href="#/studio">+ دعوة جديدة</a><button class="btn btn-white" type="button" id="export-backup">تصدير نسخة احتياطية</button><label class="btn btn-white" for="import-backup" style="cursor:pointer">استيراد نسخة</label><input id="import-backup" type="file" accept="application/json,.json" class="hidden" aria-label="استيراد دعوات من ملف"></div>'+(all.length?'<div class="dashboard-list">'+all.map(function(x){return '<article class="saved-card"><span class="pill">'+esc(x.kind)+'</span><b>'+esc(x.names||x.title)+'</b><small>'+esc(formatDate(x.date))+'</small><div class="saved-actions"><button class="btn btn-dark btn-sm" data-edit="'+attr(x.id)+'">تعديل</button><button class="btn btn-white btn-sm" data-view="'+attr(x.id)+'">عرض</button><button class="btn btn-white btn-sm" data-share="'+attr(x.id)+'">مشاركة</button><button class="btn btn-white btn-sm" data-duplicate="'+attr(x.id)+'">نسخ الدعوة</button><button class="btn btn-danger btn-sm" data-remove="'+attr(x.id)+'">حذف</button></div></article>'}).join('')+'</div>':'<div class="empty"><div style="font-size:44px">✧</div>لم تحفظ أي دعوة بعد. ابدأ بإنشاء دعوتك الأولى.</div>')+'</div>';
@@ -101,7 +137,7 @@ app.querySelectorAll('[data-view]').forEach(function(b){b.onclick=function(){var
 app.querySelectorAll('[data-share]').forEach(function(b){b.onclick=function(){var o=read().find(function(x){return x.id===b.dataset.share});if(o)share(o)}});
 app.querySelectorAll('[data-remove]').forEach(function(b){b.onclick=function(){if(confirm('حذف الدعوة المحفوظة من هذا المتصفح؟')){write(read().filter(function(x){return x.id!==b.dataset.remove}));dashboard()}}});
 }
-function encode(o){var data={presentation:o.presentation==='web'?'web':'card',kind:String(o.kind||'').slice(0,75),title:String(o.title||'').slice(0,200),names:String(o.names||'').slice(0,200),host:String(o.host||'').slice(0,250),message:String(o.message||'').slice(0,3000),date:String(o.date||'').slice(0,20),time:String(o.time||'').slice(0,10),venue:String(o.venue||'').slice(0,250),maps:safeURL(o.maps||''),whatsapp:contactValue(o.whatsapp),whatsapp2:contactValue(o.whatsapp2),whatsapp3:contactValue(o.whatsapp3),whatsapp4:contactValue(o.whatsapp4),closing:String(o.closing||'').slice(0,250),theme:catalogById[o.theme]?o.theme:(catalog[0]?catalog[0].id:'night'),story:storyUI&&storyUI.find(o.story)?o.story:''};return btoa(Array.from(new TextEncoder().encode(JSON.stringify(data)),function(b){return String.fromCharCode(b)}).join('')).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function encode(o){var data={motion:motionSettings(o).motion,duration:motionSettings(o).duration,presentation:o.presentation==='web'?'web':'card',kind:String(o.kind||'').slice(0,75),title:String(o.title||'').slice(0,200),names:String(o.names||'').slice(0,200),host:String(o.host||'').slice(0,250),message:String(o.message||'').slice(0,3000),date:String(o.date||'').slice(0,20),time:String(o.time||'').slice(0,10),venue:String(o.venue||'').slice(0,250),maps:safeURL(o.maps||''),whatsapp:contactValue(o.whatsapp),whatsapp2:contactValue(o.whatsapp2),whatsapp3:contactValue(o.whatsapp3),whatsapp4:contactValue(o.whatsapp4),closing:String(o.closing||'').slice(0,250),theme:catalogById[o.theme]?o.theme:(catalog[0]?catalog[0].id:'night'),story:storyUI&&storyUI.find(o.story)?o.story:''};return btoa(Array.from(new TextEncoder().encode(JSON.stringify(data)),function(b){return String.fromCharCode(b)}).join('')).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
 function decode(s){try{if(s.length>10000)return null;var b=atob(s.replace(/-/g,'+').replace(/_/g,'/'));var a=new Uint8Array(Array.from(b,function(c){return c.charCodeAt(0)}));var v=JSON.parse(new TextDecoder().decode(a));if(!v||typeof v!=='object')return null;return v}catch(e){return null}}
 function link(o){return location.origin+location.pathname+'#/invite/'+encode(o)}
 function renderQR(target,o){
@@ -121,6 +157,7 @@ if(o.presentation==='web'&&webUI){
  if(qrButton)qrButton.onclick=function(){renderQR(app.querySelector('[data-web-qr-target]'),o)};
  if(themeButton)themeButton.onclick=function(){var dark=webCard.dataset.webTheme!=='dark';webCard.dataset.webTheme=dark?'dark':'light';this.setAttribute('aria-pressed',String(dark))};
  if(fromPrint){var dock=app.querySelector('.web-action-dock');if(dock)dock.style.display='none'}
+ setupGuestMotion(o,fromPrint);
  return;
 }
 app.innerHTML='<div class="container guest-view"><div class="eyebrow" style="text-align:center">DAWAT · INVITATION</div><div style="margin:20px 0">'+invite(o)+'</div><div class="guest-actions">'+(map?'<a class="btn btn-dark" href="'+attr(map)+'" target="_blank" rel="noopener">📍 الموقع على الخريطة</a>':'')+(wa?'<a class="btn btn-white" href="'+attr(wa)+'" target="_blank" rel="noopener">واتساب المنظّم</a>':'')+'<button class="btn btn-white" id="copy">نسخ الرابط</button><button class="btn btn-white" id="guestpng">تنزيل البطاقة</button><button class="btn btn-white" id="guestqr">QR</button></div><div id="qrholder"></div><p class="tiny" style="text-align:center">مشاركة الرابط متاحة لكل من يحصل عليه؛ فلا تضع معلومات لا تريد مشاركتها.</p></div>';
@@ -128,6 +165,7 @@ app.querySelector('#copy').onclick=function(){copy(link(o))};
 app.querySelector('#guestpng').onclick=function(){exportPNG(o)};
 app.querySelector('#guestqr').onclick=function(){renderQR(app.querySelector('#qrholder'),o)};
 if(fromPrint)app.querySelector('.guest-actions').style.display='none';
+setupGuestMotion(o,fromPrint);
 }
 
 function copy(t){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(function(){notify('تم نسخ الرابط')}).catch(function(){openLink(t)})}else openLink(t)}
@@ -151,12 +189,34 @@ var works=[
 ['مسار الحسابات والأدوار','قيد التخطيط','يتطلب مصادقة حقيقية وتفويض وصول'],
 ['مسار الدفع والاشتراكات','قيد التخطيط','يحتاج مزود دفع وعقوداً ومراجعة أمنية'],
 ['مسار الواتساب المؤتمت','قيد التخطيط','يحتاج موافقات الضيوف وواجهة واتساب رسمية'],
-['مسار الوسائط والصوت والفيديو','قيد التخطيط','رفع ومعالجة ملفات عبر خادم مع مراعاة الحقوق'],
+['مسار الموشن جرافيك والفيديو','نشط','ثلاثة أساليب حركة، معاينة قابلة للإيقاف وتنزيل فيديو عمودي محليًا حسب دعم المتصفح'],
+['مسار الصوت والوسائط المرفوعة','قيد التخطيط','رفع ومعالجة ملفات وإضافة التعليق الصوتي'],
 ['مسار التحليلات والتسويق','قيد التخطيط','يحتاج بيانات حقيقية وموافقة المستخدمين'],
 ['مسار اختبارات الجودة والنشر','نشط','اختبارات فهرس التصاميم وسلامة JavaScript والنشر الآلي']
 ];
 app.innerHTML='<div class="container"><div class="eyebrow">DAWAT · WORKFLOWS</div><h1 style="font:700 40px Amiri">مسارات منصة دعوات</h1><p class="subtitle">المسارات النشطة تعمل دون نظام حسابات مركزي. المسارات المخطط لها لا ندّعي أنها متصلة أو مفعلة.</p><div class="cards">'+works.map(function(w){return '<div class="card"><strong>'+esc(w[0])+'</strong><span class="pill" style="margin-top:9px;'+(w[1]!=='نشط'?'background:#fff1dd;color:#99652d':'')+'">'+esc(w[1])+'</span><p>'+esc(w[2])+'</p></div>'}).join('')+'</div></div>';
 }
-function route(){var h=location.hash||'#/';if(h.startsWith('#/invite/')){var o=decode(h.slice(9));if(o)showGuest(o);else app.innerHTML='<div class="container"><div class="empty">رابط الدعوة غير صالح.</div></div>';return}if(h==='#/dashboard'){dashboard();return}if(h==='#/studio'){studio();return}if(h==='#/paths'){pathsPage();return}if(storyUI){storyUI.page(app,function(id){editing=null;if(id==='web-invitation'){state={presentation:'web',kind:'زفاف',title:'دعوة خاصة',names:'',host:'',message:'',date:'',time:'',venue:'',maps:'',whatsapp:'',whatsapp2:'',whatsapp3:'',whatsapp4:'',closing:'',theme:'champagne',story:'01-ivory-magnolia'};location.hash='#/studio';return}var t=storyUI.find(id);if(!t)return;state.presentation='card';state.story=t.id;state.kind=t.kind;state.title=t.name;state.names='';state.host='تتشرف العائلة بدعوتكم';state.message='يسرّنا مشاركتكم فرحتنا وحضوركم الكريم';state.date='';state.time='';state.venue='';state.maps='';state.whatsapp='';state.whatsapp2='';state.whatsapp3='';state.whatsapp4='';state.closing='';location.hash='#/studio'})}else app.innerHTML='<div class="container"><div class="empty">تعذر تحميل مكتبة التصميم.</div></div>'}
+function route(){
+ if(motionUI)motionUI.destroy();motionPlayer=null;
+ var h=location.hash||'#/';
+ if(h.startsWith('#/invite/')){var o=decode(h.slice(9));if(o)showGuest(o);else app.innerHTML='<div class="container"><div class="empty">رابط الدعوة غير صالح.</div></div>';return}
+ if(h==='#/dashboard'){dashboard();return}
+ if(h==='#/studio'||h==='#/motion'){studio();return}
+ if(h==='#/paths'){pathsPage();return}
+ if(storyUI){
+  storyUI.page(app,function(id){
+   editing=null;
+   if(id==='web-invitation'||id==='motion-invitation'){
+    state={presentation:'web',kind:'زفاف',title:'دعوة خاصة',names:'',host:'',message:'',date:'',time:'',venue:'',maps:'',whatsapp:'',whatsapp2:'',whatsapp3:'',whatsapp4:'',closing:'',theme:'champagne',story:'01-ivory-magnolia',motion:'breeze',duration:12};
+    if(id==='motion-invitation'){state.presentation='card';state.story='03-black-and-gold';state.motion='sparkle'}
+    location.hash=id==='motion-invitation'?'#/motion':'#/studio';return;
+   }
+   var t=storyUI.find(id);if(!t)return;
+   state={presentation:'card',kind:t.kind,title:t.name,names:'',host:'تتشرف العائلة بدعوتكم',message:'يسرّنا مشاركتكم فرحتنا وحضوركم الكريم',date:'',time:'',venue:'',maps:'',whatsapp:'',whatsapp2:'',whatsapp3:'',whatsapp4:'',closing:'',theme:'night',story:t.id,motion:'breeze',duration:12};
+   location.hash='#/studio';
+  });
+  if(motionUI)motionPlayer=motionUI.mount(app,{motion:'sparkle',duration:12});
+ }else app.innerHTML='<div class="container"><div class="empty">تعذر تحميل مكتبة التصميم.</div></div>';
+}
 window.addEventListener('hashchange',route);route();
 })();
