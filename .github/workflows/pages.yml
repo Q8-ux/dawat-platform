@@ -47,6 +47,8 @@ jobs:
         run: |
           node --check assets/catalog.js
           node --check assets/motion.js
+          node --check assets/compositor-export.js
+          node --check assets/invitation-compositor.js
           node --check assets/app.js
           node --check assets/invitation-utils.js
           node --check assets/web-invitation.js
@@ -58,7 +60,7 @@ jobs:
         run: |
           mkdir -p dist/assets
           cp index.html dist/index.html
-          cp assets/app.js assets/catalog.js assets/stories.js assets/story-ui.js assets/stories.css assets/neon-3d.css assets/invitation-utils.js assets/web-invitation.js assets/web-invitation.css assets/motion.js assets/motion.css dist/assets/
+          cp assets/app.js assets/catalog.js assets/stories.js assets/story-ui.js assets/stories.css assets/neon-3d.css assets/invitation-utils.js assets/web-invitation.js assets/web-invitation.css assets/motion.js assets/motion.css assets/compositor-export.js assets/invitation-compositor.js dist/assets/
           cp -R assets/story-art dist/assets/story-art
           cp -R assets/vendor dist/assets/vendor
           cp -R assets/fonts dist/assets/fonts
@@ -86,3 +88,4 @@ jobs:
       - name: Publish
         id: deployment
         uses: actions/deploy-pages@v4
+
