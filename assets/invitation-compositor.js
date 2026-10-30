@@ -3,9 +3,26 @@
 const core=root.COMPOSITOR_EXPORT;
 const labels=['الجهة الداعية','المناسبة','الأسماء والعنوان','نص الدعوة','التاريخ','الوقت','المكان','الختام'];
 async function image(src){return new Promise((resolve,reject)=>{const img=new root.Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('تعذر تحميل خلفية الدعوة.'));img.src=src})}
+let fontBundle;
+const assetBase=new URL('.',root.document.currentScript?.src||new URL('assets/invitation-compositor.js',root.document.baseURI));
+function bundledFonts(){
+ if(root.DAWAT_COMPOSITOR_FONTS)return Promise.resolve(root.DAWAT_COMPOSITOR_FONTS);
+ if(fontBundle)return fontBundle;
+ fontBundle=new Promise((resolve,reject)=>{
+  const script=root.document.createElement('script');let timer;
+  const fail=()=>{root.clearTimeout(timer);fontBundle=null;script.remove();reject(new Error('تعذر تحميل خط الحزمة؛ تحقق من الاتصال وأعد التنزيل.'))};
+  script.src=new URL('compositor-fonts.js?v=1',assetBase).href;
+  script.onload=()=>{root.clearTimeout(timer);if(root.DAWAT_COMPOSITOR_FONTS)resolve(root.DAWAT_COMPOSITOR_FONTS);else fail()};
+  script.onerror=fail;timer=root.setTimeout(fail,25000);root.document.head.appendChild(script);
+ });
+ return fontBundle;
+}
 async function fontFiles(){
- const paths=['Amiri-Regular.ttf','Amiri-Bold.ttf','Amiri-OFL.txt'];
- return Promise.all(paths.map(async name=>{const response=await root.fetch(new URL('assets/fonts/'+name,root.document.baseURI));if(!response.ok)throw new Error('تعذر تضمين خط الدعوة؛ أعد المحاولة.');return {path:'Fonts/'+name,data:await response.arrayBuffer()}}));
+ const files=await bundledFonts();
+ return ['Amiri-Regular.ttf','Amiri-Bold.ttf','Amiri-OFL.txt'].map(name=>{
+  if(typeof files[name]!=='string')throw new Error('ملفات الخط غير مكتملة؛ أعد تحميل الصفحة.');
+  return {path:'Fonts/'+name,data:Uint8Array.from(root.atob(files[name]),c=>c.charCodeAt(0))};
+ });
 }
 async function create(item,formatDate){
  if(!core||!root.DAWAT_MOTION)throw new Error('تعذر تحميل أدوات تصدير الطبقات.');
